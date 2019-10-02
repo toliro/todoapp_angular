@@ -89,6 +89,7 @@ export class UsersComponent implements OnInit {
   constructor(){
     this.filteredData = this.userData;
   }
+  
   ngOnInit(){
 
   }
