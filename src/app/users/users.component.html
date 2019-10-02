@@ -1,0 +1,45 @@
+<div>
+        <h1>List of Users</h1>
+        <div class="header">
+            <input type="text" name="" id="search" placeholder="Search"
+            [(ngModel)] = "searchText" (change) = "onSearch()"><button>Search</button>
+            <a href="/index.html"><button id="viewTodos">View Todos</button></a>
+            <a href="/add_user.html"><button id="add">Add</button></a>
+        </div>
+        <span *ngIf="userData.length ===0">No Results</span>
+        <table class="tasks" id="users" *ngIf="userData.length > 1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Occupation</th>
+                    <!-- <th># of Todos</th> -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let user of filteredData">
+                    <td>{{user.id}}</td>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.occupation}}</td>
+                    <!-- <td># of Todos</td> -->
+                    <td>
+                        <a href="user-details.html"><button>Edit</button></a>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <br>
+        Showing {{filteredData.length}} results of {{userData.length}}
+    </div>
+
+    <!-- <div>
+        <a href="index.html"><button>&lt;</button></a>
+        Page 1/2
+        <a href="user.html"><button>&gt;</button></a>
+    </div> -->
