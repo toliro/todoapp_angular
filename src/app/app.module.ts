@@ -8,6 +8,7 @@ import { from } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';
+import { AddtodosModule } from './addtodos/addtodos.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TodosModule } from './todos/todos.module';
     FormsModule,
     AppRoutingModule,
     UsersModule,
-    TodosModule
+    TodosModule,
+    AddtodosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

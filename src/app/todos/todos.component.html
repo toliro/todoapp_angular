@@ -1,53 +1,52 @@
-<div>
-  <h1>Todo List</h1>
-  <div class="header">
-    <input
-      type="text"
-      name=""
-      id="search"
-      placeholder="Search"
-      [(ngModel)]="searchText"
-      (keyup)="onSearch()"
-    /><button>
-      Search
-    </button>
-    <a routerLink="/users"><button id="viewUsers">View Users</button></a>
-    <a href="add_todo.html"><button id="add">Add</button></a>
+<div class="container container mx-auto box-shadow  mt-7 w-75 bg-white">
+  <h1 class="display-4 mt-5" style="background-color: dodgerblue;">Todos</h1>
+
+  <div class="row mb-2">
+      <div class="col">
+        <input
+          class="form-control"
+          type="text"
+          id="search"
+          placeholder="Search"
+          [(ngModel)]="searchText"
+          (keyup)="onSearch()"
+        />
+      </div>
+  
+      <div class="col">
+        <button class="btn btn-info float-right" (click)="addTodo()">Add Todo</button>
+        <button routerLink="/users" class="btn btn-info mr-2 float-right">
+          View Users
+        </button>
+      </div>
+    </div>
+
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr style="background-color:#E9967A;">
+          <th>#</th>
+          <th>Tasks</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Assigned User</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let todos of filteredData">
+          <td>{{ todos.id }}</td>
+          <td>{{ todos.name }}</td>
+          <td>{{ todos.description }}</td>
+          <td>{{ todos.status }}</td>
+          <td>{{ todos.owner }}</td>
+          <td>
+            <a (click)="onUpdate(user)">Edit</a> |
+            <a (click)="onDelete(user)">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <span *ngIf="todoData.length === 0">No Results</span>
-  <table class="tasks" id="todos" *ngIf="todoData.length > 1">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Tasks</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Assigned User</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let todos of filteredData">
-        <td>{{ todos.id }}</td>
-        <td>{{ todos.name }}</td>
-        <td>{{ todos.description }}</td>
-        <td>{{ todos.status }}</td>
-        <td>{{ todos.owner }}</td>
-        <td>
-          <a (click)="onUpdate(user)">Edit</a> | 
-          <a (click)="onDelete(user)">Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <br />
-  Showing {{ filteredData.length }} results of {{ todoData.length }}
 </div>
-
-<!-- <div>
-    <a href="index.html"><button>&lt;</button></a>
-    Page 1/2
-    <a href="user.html"><button>&gt;</button></a>
-  </div> -->

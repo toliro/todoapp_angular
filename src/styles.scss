@@ -1,146 +1,146 @@
-/* You can add global styles to this file, and also import other style files */
+// /* You can add global styles to this file, and also import other style files */
 
-.tasks {
-  border-collapse: separate;
-  padding: 8px;
-  font-family: "Times New Roman", Times, serif;
-  width: 60%;
-  font-size: large;
-  border: 1px groove black;
-}
+// .tasks {
+//   border-collapse: separate;
+//   padding: 8px;
+//   font-family: "Times New Roman", Times, serif;
+//   width: 60%;
+//   font-size: large;
+//   border: 1px groove black;
+// }
 
-thead {
-  background-color: lightgreen;
-}
+// thead {
+//   background-color: lightgreen;
+// }
 
-.even {
-  background-color: lightgray;
-}
+// .even {
+//   background-color: lightgray;
+// }
 
-#viewTodos {
-  margin-left: 600px;
-}
+// #viewTodos {
+//   margin-left: 600px;
+// }
 
-.header {
-  background-color: dodgerblue;
-  width: 60%;
-}
+// .header {
+//   background-color: dodgerblue;
+//   width: 60%;
+// }
 
-.main-div {
-  padding: 16px;
-  position: absolute;
-  max-width: 950px;
-  border-style: groove;
-  margin: auto;
-  right: 30%;
-}
+// .main-div {
+//   padding: 16px;
+//   position: absolute;
+//   max-width: 950px;
+//   border-style: groove;
+//   margin: auto;
+//   right: 30%;
+// }
 
-.profile {
-  padding: 5px;
-  max-width: 400px;
-  margin-left: 25px;
-}
+// .profile {
+//   padding: 5px;
+//   max-width: 400px;
+//   margin-left: 25px;
+// }
 
-.profile > img {
-  border-radius: 50%;
-}
+// .profile > img {
+//   border-radius: 50%;
+// }
 
-.user_details_form {
-  margin-right: 30px;
-  max-width: 400px;
-  padding: 16px;
-  background-color: white;
-}
+// .user_details_form {
+//   margin-right: 30px;
+//   max-width: 400px;
+//   padding: 16px;
+//   background-color: white;
+// }
 
-/* style for user form */
-.user-form {
-  position: absolute;
-  right: 40%;
-  margin: 20px;
-  max-width: 300px;
-  padding: 16px;
-  background-color: white;
-}
+// /* style for user form */
+// .user-form {
+//   position: absolute;
+//   right: 40%;
+//   margin: 20px;
+//   max-width: 300px;
+//   padding: 16px;
+//   background-color: white;
+// }
 
-/* set input type text to full width */
-#user,
-input[type="password"],
-input[type="file"] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: whitesmoke;
-}
+// /* set input type text to full width */
+// #user,
+// input[type="password"],
+// input[type="file"] {
+//   width: 100%;
+//   padding: 15px;
+//   margin: 5px 0 22px 0;
+//   border: none;
+//   background: whitesmoke;
+// }
 
-/* style for the submit button */
-.btn {
-  background-color: rgb(76, 175, 80);
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  width: 108%;
-  opacity: 0.9;
-  font-size: 15px;
-}
+// /* style for the submit button */
+// .btn {
+//   background-color: rgb(76, 175, 80);
+//   color: white;
+//   padding: 16px 20px;
+//   border: none;
+//   width: 108%;
+//   opacity: 0.9;
+//   font-size: 15px;
+// }
 
-.cancel {
-  background-color: rgb(248, 21, 4);
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  width: 108%;
-  opacity: 0.9;
-  font-size: 15px;
-}
+// .cancel {
+//   background-color: rgb(248, 21, 4);
+//   color: white;
+//   padding: 16px 20px;
+//   border: none;
+//   width: 108%;
+//   opacity: 0.9;
+//   font-size: 15px;
+// }
 
-#back {
-  margin-left: 40%;
-  background-color: rgb(76, 175, 80);
-  border-radius: 20px;
-}
+// #back {
+//   margin-left: 40%;
+//   background-color: rgb(76, 175, 80);
+//   border-radius: 20px;
+// }
 
-/* style for todo form */
-.todo-form {
-  position: absolute;
-  right: 40%;
-  margin: 20px;
-  max-width: 300px;
-  padding: 16px;
-  background-color: white;
-}
+// /* style for todo form */
+// .todo-form {
+//   position: absolute;
+//   right: 40%;
+//   margin: 20px;
+//   max-width: 300px;
+//   padding: 16px;
+//   background-color: white;
+// }
 
-/* set input type text to full width */
-#todo,
-input[type="password"] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-}
+// /* set input type text to full width */
+// #todo,
+// input[type="password"] {
+//   width: 100%;
+//   padding: 15px;
+//   margin: 5px 0 22px 0;
+//   border: none;
+//   background: #f1f1f1;
+// }
 
-/* style for the submit button */
-.btn {
-  background-color: rgb(76, 175, 80);
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  width: 110%;
-  opacity: 0.9;
-  font-size: 15px;
-}
+// /* style for the submit button */
+// .btn {
+//   background-color: rgb(76, 175, 80);
+//   color: white;
+//   padding: 16px 20px;
+//   border: none;
+//   width: 110%;
+//   opacity: 0.9;
+//   font-size: 15px;
+// }
 
-.cancel {
-  background-color: rgb(248, 21, 4);
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  width: 110%;
-  opacity: 0.9;
-  font-size: 15px;
-}
+// .cancel {
+//   background-color: rgb(248, 21, 4);
+//   color: white;
+//   padding: 16px 20px;
+//   border: none;
+//   width: 110%;
+//   opacity: 0.9;
+//   font-size: 15px;
+// }
 
-#viewUsers {
-  margin-left: 600px;
-}
+// #viewUsers {
+//   margin-left: 600px;
+// }

@@ -100,4 +100,10 @@ export class TodosComponent implements OnInit {
     console.log(todos);
   }
 
+  addTodo() {
+    this.router.navigate(['addtodos/new']);
+  }
+
 }
+
+

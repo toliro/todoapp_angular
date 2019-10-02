@@ -1,52 +1,54 @@
-<div>
-  <h1>List of Users</h1>
-  <div class="header">
-    <input
-      type="text"
-      name=""
-      id="search"
-      placeholder="Search"
-      [(ngModel)]="searchText"
-      (keyup)="onSearch()"
-    /><button>Search</button>
-    <a routerLink="/todos"><button id="viewTodos">View Todos</button></a>
-    <a href="/add_user.html"><button id="add">Add</button></a>
+<div class="container container mx-auto box-shadow  mt-7 w-75 bg-white">
+  <h1 class="display-4 mt-5" style="background-color: dodgerblue;">Users</h1>
+
+  <div class="row mb-2">
+    <div class="col">
+      <input
+        class="form-control"
+        type="text"
+        id="search"
+        placeholder="Search"
+        [(ngModel)]="searchText"
+        (keyup)="onSearch()"
+      />
+    </div>
+
+    <div class="col">
+      <button class="btn btn-info float-right" (click)="addTodo()">Add User</button>
+      <button routerLink="/todos" class="btn btn-info mr-2 float-right">
+        View Todos
+      </button>
+    </div>
   </div>
-  <span *ngIf="filteredData.length === 0">No Results</span>
-  <table class="tasks" id="users" *ngIf="userData.length > 1">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Occupation</th>
-        <th>Todos</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
 
-    <tbody>
-      <tr *ngFor="let user of filteredData">
-        <td>{{ user.id }}</td>
-        <td>{{ user.firstname }}</td>
-        <td>{{ user.lastname }}</td>
-        <td>{{ user.occupation }}</td>
-        <td>
-          <a routerLink="/todos/{{user.id}}">View Todos</a>
-        </td>
-        <td>
-          <a (click)="onUpdate(user)">Edit</a> | 
-          <a (click)="onDelete(user)">Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <br />
-  Showing {{ filteredData.length }} results of {{ userData.length }}
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr style="background-color:#E9967A;">
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Occupation</th>
+          <th>Todos</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let user of filteredData">
+          <td>{{ user.id }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.occupation }}</td>
+          <td>
+            <a routerLink="/todos/{{ user.id }}">View Todos</a>
+          </td>
+          <td>
+            <a (click)="onUpdate(user)">Edit</a> |
+            <a (click)="onDelete(user)">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-<!-- <div>
-        <a href="index.html"><button>&lt;</button></a>
-        Page 1/2
-        <a href="user.html"><button>&gt;</button></a>
-    </div> -->
