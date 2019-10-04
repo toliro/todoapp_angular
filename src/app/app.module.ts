@@ -9,6 +9,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';
 import { AddtodosModule } from './addtodos/addtodos.module';
+import { AddusersModule } from './addusers/addusers.module';
+import { EdittodosModule } from './edittodos/edittodos.module';
+import { EditusersModule } from './editusers/editusers.module';
+import { TodosRoutingModule } from './todos/todos-routing.module';
+import { TodosServiceService } from './todos/service/todos-service.service';
+import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserRoutingModule } from './users/users-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,10 +26,16 @@ import { AddtodosModule } from './addtodos/addtodos.module';
     FormsModule,
     AppRoutingModule,
     UsersModule,
+    UserRoutingModule,
     TodosModule,
-    AddtodosModule
+    TodosRoutingModule,
+    AddtodosModule,
+    AddusersModule,
+    EdittodosModule,
+    EditusersModule,
+    NgbModalModule
   ],
-  providers: [],
+  providers: [TodosServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

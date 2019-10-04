@@ -3,28 +3,38 @@ import { Routes, RouterModule } from '@angular/router';
 import { UsersComponent } from './users/users.component';
 import { TodosComponent } from './todos/todos.component';
 import { AddtodosComponent } from './addtodos/addtodos.component';
+import { AddusersComponent } from './addusers/addusers.component';
+import { EdittodosComponent } from './edittodos/edittodos.component';
+import { EditusersComponent } from './editusers/editusers.component';
 
 const routes : Routes = [
     {
         path: 'users',
-        component: UsersComponent
+        loadChildren: './users/users.module#UsersModule'
     },
+
+    {
+        path: 'todos',
+        loadChildren:  './todos/todos.module#TodosModule'
+    },
+    
     {
         path: ' ',
         redirectTo: 'users',
         pathMatch: 'full'
     },
-    {
-        path: 'todos',
-        component: TodosComponent
-    },
-    {
-        path: 'todos/:userId',
-        component: TodosComponent
-    },
+
     {
         path: 'addtodos/new',
         component: AddtodosComponent
+    },
+    {
+        path: 'addusers/new',
+        component: AddusersComponent
+    },
+    {
+        path: 'todosedit/edit',
+        component: EdittodosComponent
     }
 ];
 

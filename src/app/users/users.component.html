@@ -1,8 +1,12 @@
-<div class="container container mx-auto box-shadow  mt-7 w-75 bg-white">
-  <h1 class="display-4 mt-5" style="background-color: dodgerblue;">Users</h1>
+<div class="container">
+  <div class="row mt-5 bg-primary text-white">
+    <h1 class="display-4 ml-2">Users</h1>
+  </div>
 
-  <div class="row mb-2">
-    <div class="col">
+  <span *ngIf="filteredData.length === 0">No result</span>
+
+  <div class="row mb-2 mt-2">
+    <div>
       <input
         class="form-control"
         type="text"
@@ -14,7 +18,9 @@
     </div>
 
     <div class="col">
-      <button class="btn btn-info float-right" (click)="addTodo()">Add User</button>
+      <button class="btn btn-info float-right" (click)="addUser()">
+        Add User
+      </button>
       <button routerLink="/todos" class="btn btn-info mr-2 float-right">
         View Todos
       </button>
@@ -22,9 +28,9 @@
   </div>
 
   <div class="row">
-    <table class="table table-striped">
-      <thead>
-        <tr style="background-color:#E9967A;">
+    <table class="table table-striped"  *ngIf="filteredData.length > 1">
+      <thead *ngIf="filteredData.length > 1">
+        <tr class="bg-secondary text-white">
           <th>#</th>
           <th>First Name</th>
           <th>Last Name</th>
@@ -44,11 +50,19 @@
             <a routerLink="/todos/{{ user.id }}">View Todos</a>
           </td>
           <td>
-            <a (click)="onUpdate(user)">Edit</a> |
+            <a routerLink="/users/edit">Edit</a> |
             <a (click)="onDelete(user)">Delete</a>
           </td>
         </tr>
       </tbody>
+
+      <tfoot>
+        <tr>
+          <td class="p-2" colspan="6">
+            Showing {{ filteredData.length }} results of {{ userData.length }}.
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>

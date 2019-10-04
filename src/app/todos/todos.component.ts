@@ -1,60 +1,37 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
+import { TodosServiceService } from './service/todos-service.service';
+import { Todos } from './model/todosinterface';
+import { ModalComponent } from './modal/modal.component';
 
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit {
 
   title = 'my-app';
 
+  page = 4;
+
   searchText : string;
 
-  todoData = [
-    {
-        id: "1",
-        name: "Testing",
-        description: "Unit Testing",
-        status: "In-Progress",
-        owner: "1"
-    },
-    {
-        id: "2",
-        name: "Devolepment",
-        description: "Web Development",
-        status: "In-Progress",
-        owner: "1"
-    },
-    {
-        id: "3",
-        name: "Testing",
-        description: "Production Testing",
-        status: "In-Progress",
-        owner: "2"
-    },
-    {
-        id: "4",
-        name: "Developement",
-        description: "Web Development",
-        status: "In-Progress",
-        owner: "3"
-    },
-    
-]
+  modal: ModalComponent;
 
-  filteredData: any[];
+  @Input() todos: Todos
+
+  filteredData: Todos[];
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private service: TodosServiceService
     ){
-    this.filteredData = this.todoData;
+    this.loadData();
     // this.router = router;
   }
   ngOnInit(){
-    // this.router
     //get the user id from url
     console.log('[TodosComponent] On Init!')
 
@@ -64,28 +41,34 @@ export class TodosComponent implements OnInit {
         console.log("Params");
         const userId = paramMap.get('userId');
         console.log(userId);
-
-        //filter data by owner (user id)
-        this.filteredData = this.todoData.filter((todo)=>{
-          return todo.owner === userId;
-        })
+       
+        if (userId) {
+          // Filter todos by owner (user id)
+          this.filteredData = this.service.getTodos().filter((todo) => {
+            return todo.owner === userId;
+          });
+        }
     })
+  }
+
+  loadData(){
+    this.filteredData = this.service.getTodos();
   }
 
   onSearch(){
     console.log(this.searchText);
 
-    const searchText = this.searchText.toLocaleLowerCase();
+    const searchText = this.searchText.toLowerCase();
 
     if(this.searchText){
-      this.filteredData = this.todoData.filter((todos)=>{
+      this.filteredData = this.service.getTodos().filter((todos)=>{
         return todos.name.toLowerCase().includes(this.searchText) || 
         todos.description.toLowerCase().includes(this.searchText) ||
         todos.status.toLowerCase().includes(this.searchText) ||
         todos.owner.toLowerCase().includes(this.searchText)
       })
     }else{
-      this.filteredData = this.todoData;
+      this.filteredData = this.service.getTodos();
     }
     
   }
@@ -103,6 +86,10 @@ export class TodosComponent implements OnInit {
   addTodo() {
     this.router.navigate(['addtodos/new']);
   }
+  openModal(content){
+    this.modal.openModal(content);
+  }
+
 
 }
 

@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsersComponent } from './users.component';
+import { EdittodosComponent } from './edittodos.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { UserRoutingModule } from './users-routing.module';
 
 
 
 @NgModule({
-  declarations: [UsersComponent],
+  declarations: [EdittodosComponent],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule,
-    UserRoutingModule
+    RouterModule
   ]
 })
-export class UsersModule { }
+export class EdittodosModule { }

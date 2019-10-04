@@ -1,30 +1,36 @@
-<div class="container container mx-auto box-shadow  mt-7 w-75 bg-white">
-  <h1 class="display-4 mt-5" style="background-color: dodgerblue;">Todos</h1>
+<div class="container mx-auto box-shadow mt-7 w-75 bg-white">
+  <div class="row mt-5 bg-primary text-white">
+    <h1 class="display-4 ml-2">Todos</h1>
+  </div>
 
-  <div class="row mb-2">
-      <div class="col">
-        <input
-          class="form-control"
-          type="text"
-          id="search"
-          placeholder="Search"
-          [(ngModel)]="searchText"
-          (keyup)="onSearch()"
-        />
-      </div>
-  
-      <div class="col">
-        <button class="btn btn-info float-right" (click)="addTodo()">Add Todo</button>
-        <button routerLink="/users" class="btn btn-info mr-2 float-right">
-          View Users
-        </button>
-      </div>
+  <span *ngIf="filteredData.length === 0">No result</span>
+
+  <div class="row mb-2 mt-2">
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        id="search"
+        placeholder="Search"
+        [(ngModel)]="searchText"
+        (keyup)="onSearch()"
+      />
     </div>
 
+    <div class="col">
+      <button class="btn btn-info float-right" (click)="addTodo()">
+        Add Todo
+      </button>
+      <button routerLink="/users" class="btn btn-info mr-2 float-right">
+        View Users
+      </button>
+    </div>
+  </div>
+
   <div class="row">
-    <table class="table table-striped">
-      <thead>
-        <tr style="background-color:#E9967A;">
+    <table class="table table-striped" *ngIf="filteredData.length > 1">
+      <thead *ngIf="filteredData.length > 1">
+        <tr class="bg-secondary text-white">
           <th>#</th>
           <th>Tasks</th>
           <th>Description</th>
@@ -42,11 +48,92 @@
           <td>{{ todos.status }}</td>
           <td>{{ todos.owner }}</td>
           <td>
-            <a (click)="onUpdate(user)">Edit</a> |
+            <button
+              class="btn btn-outline-primary mb-2 mr-2"
+              (click)="openModal(content)"
+            >
+              Edit
+            </button>
             <a (click)="onDelete(user)">Delete</a>
           </td>
         </tr>
       </tbody>
+
+      <tfoot>
+        <tr>
+          <td class="p-2" colspan="6">
+            <!-- Showing {{ filteredData.length }} results of {{ .length }}. -->
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
+
+<ngb-pagination [collectionSize]="70" [(page)]="page" [directionLinks]="false"></ngb-pagination>
+
+  <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Information</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="">
+        <div class="modal-body">
+          <div class="container">
+            <div>
+              <div class="form-group">
+                <label for="todoId">Id:</label>
+                <input type="text" class="form-control" id="todoId"/>
+              </div>
+              <div class="form-group">
+                <label for="todo-name">Name:</label>
+                <input type="text" class="form-control" id="todo-name" />
+              </div>
+    
+              <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" id="description" />
+              </div>
+    
+              <div class="form-group">
+                <label for="Status">Status:</label>
+                <input type="text" class="form-control" id="status" />
+              </div>
+    
+              <div class="form-group">
+                <label for="owner">Select Owner</label>
+                <select class="form-control" id="owner">
+                  <option>Select</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="modal.close('Close click')"
+          >
+            Cancel
+          </button>
+    
+          <button type="submit" class="btn btn-primary float-right ">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </ng-template>
+    
 </div>

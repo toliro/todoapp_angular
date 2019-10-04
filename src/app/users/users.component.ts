@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -86,7 +87,7 @@ export class UsersComponent implements OnInit {
 
   filteredData: any[];
 
-  constructor(){
+  constructor(private router: Router){
     this.filteredData = this.userData;
   }
   
@@ -97,7 +98,7 @@ export class UsersComponent implements OnInit {
   onSearch(){
     console.log(this.searchText);
 
-    const searchText = this.searchText.toLocaleLowerCase();
+    const searchText = this.searchText.toLowerCase();
 
     if(this.searchText){
       this.filteredData = this.userData.filter((users)=>{
@@ -119,6 +120,10 @@ export class UsersComponent implements OnInit {
   onDelete(users){
     console.log("delete");
     console.log(users);
+  }
+
+  addUser() {
+    this.router.navigate(['addusers/new']);
   }
 
 
