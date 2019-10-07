@@ -4,7 +4,6 @@ import { UsersComponent } from './users/users.component';
 import { TodosComponent } from './todos/todos.component';
 import { AddtodosComponent } from './addtodos/addtodos.component';
 import { AddusersComponent } from './addusers/addusers.component';
-import { EdittodosComponent } from './edittodos/edittodos.component';
 import { EditusersComponent } from './editusers/editusers.component';
 
 const routes : Routes = [
@@ -25,16 +24,15 @@ const routes : Routes = [
     },
 
     {
-        path: 'addtodos/new',
+        path: 'addtodos',
         component: AddtodosComponent
     },
     {
-        path: 'addusers/new',
+        path: 'addusers',
         component: AddusersComponent
-    },
-    {
-        path: 'todosedit/edit',
-        component: EdittodosComponent
+    },{
+        path: 'editusers',
+        component: EditusersComponent
     }
 ];
 

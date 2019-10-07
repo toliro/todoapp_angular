@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { TodosServiceService } from './service/todos-service.service';
 import { Todos } from './model/todosinterface';
 import { ModalComponent } from './modal/modal.component';
+import { ToastService } from '../toast.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DelmodalComponent } from './modal/delmodal/delmodal.component';
 
 @Component({
   selector: 'app-todos',
@@ -17,17 +20,17 @@ export class TodosComponent implements OnInit {
 
   searchText : string;
 
-  modal: ModalComponent;
-
   @Input() todos: Todos
+  @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
   filteredData: Todos[];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private service: TodosServiceService
-    ){
+    private service: TodosServiceService,
+    private modalService: NgbModal,
+    private toast: ToastService   ){
     this.loadData();
     // this.router = router;
   }
@@ -83,13 +86,48 @@ export class TodosComponent implements OnInit {
     console.log(todos);
   }
 
-  addTodo() {
-    this.router.navigate(['addtodos/new']);
+  // addTodo() {
+  //   this.router.navigate(['addtodos']);
+  // }
+
+  passBack() {
+    this.passEntry.emit(this.todos);
   }
-  openModal(content){
-    this.modal.openModal(content);
+  
+  openModal(){
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.title = "Edit Todo";
+
+    // modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
+    //   console.log(receivedEntry);
+    // })
   }
 
+  delModal(){
+    const modalRef = this.modalService.open(DelmodalComponent);
+    
+  }
+
+  addModal(todos: Todos) {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.title = "Add Todos";
+
+    modalRef.result.then(result => {
+      if(result){
+      
+        this.filteredData = [
+         
+
+        ]
+         
+
+
+       return this.service.saveTodo(todos);
+      }
+    })
+  }
+
+  
 
 }
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditmodalComponent } from './modal/editmodal/editmodal.component';
+import { DelmodalComponent } from './modal/delmodal/delmodal.component';
 
 @Component({
   selector: 'app-users',
@@ -87,7 +90,11 @@ export class UsersComponent implements OnInit {
 
   filteredData: any[];
 
-  constructor(private router: Router){
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private modalService: NgbModal
+    ){
     this.filteredData = this.userData;
   }
   
@@ -123,7 +130,23 @@ export class UsersComponent implements OnInit {
   }
 
   addUser() {
-    this.router.navigate(['addusers/new']);
+    const modalRef = this.modalService.open(EditmodalComponent);
+    modalRef.componentInstance.title = "Add User";
+  }
+
+  openModal(){
+    const modalRef = this.modalService.open(EditmodalComponent);
+    modalRef.componentInstance.name = "Edit User Information";
+
+    // modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
+    //   console.log(receivedEntry);
+    // })
+  }
+
+  delModal(){
+    const modalRef = this.modalService.open(DelmodalComponent);
+    modalRef.componentInstance.name = "Modal";
+
   }
 
 

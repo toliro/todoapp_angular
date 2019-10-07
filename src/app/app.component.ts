@@ -1,4 +1,7 @@
-import { Component} from '@angular/core';
+import { Component, NgModuleRef} from '@angular/core';
+import { ToastService } from './toast.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './todos/modal/modal.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +12,9 @@ export class AppComponent {
   title = "my-app";
   // can be written as public title: string = 'my-app'
 
-  //constructor(public toastService: ToastService) {}
+  constructor(public toastService: ToastService) {}
+
+
   
 }
 

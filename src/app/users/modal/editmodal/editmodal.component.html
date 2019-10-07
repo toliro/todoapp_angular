@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{title}}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form action="">
+  <div class="modal-body">
+    <div class="container">
+      <div>
+        <div class="form-group">
+          <label for="todoId">Id:</label>
+          <input type="text" class="form-control" id="todoId" />
+        </div>
+        <div class="form-group">
+          <label for="fname">First Name:</label>
+          <input type="text" class="form-control" id="fname" />
+        </div>
+
+        <div class="form-group">
+          <label for="lname">Last Name:</label>
+          <input type="text" class="form-control" id="lname" />
+        </div>
+
+        <div class="form-group">
+          <label for="occupation">Occupation:</label>
+          <input type="text" class="form-control" id="occupation" />
+        </div>
+
+        <div class="form-group">
+          <label for="owner">Profile Picture</label>
+          <input type="text" class="form-control" id="profile" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="activeModal.close('Save click')"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-primary float-right"
+      (click)="showSuccess()"
+      ngbTooltip="Will disappear in 10s"
+    >
+      Save Changes
+    </button>
+  </div>
+</form>

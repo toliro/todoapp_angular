@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h4 class="modal-title">Delete Users</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form action="">
+    <div class="modal-body">
+      <div class="container">
+        <div>
+          <div class="form-group">
+            <label for="todoId">Enter Id to be deleted:</label>
+            <input type="text" class="form-control" id="todoId" />
+          </div>
+        </div>
+
+    </div>
+         
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-light"
+        (click)="activeModal.close('Save click')"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="submit"
+        class="btn btn-primary float-right"
+        (click)="showSuccess()"
+        ngbTooltip="Will disappear in 10s"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>

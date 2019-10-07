@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Todos } from '../model/todosinterface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,10 +44,6 @@ filered: any[];
   constructor(private modalService: NgbModal) { 
   }
 
-  openModal(content) {
-    this.modalService.open(content, {backdropClass: 'light-green-backdrop'});
-  }
-
   onUpdate(){
 
   }
@@ -55,12 +52,19 @@ filered: any[];
 
   }
 
-  getTodo(){
+  // getTodo((userId) =>{
+  //   const foundUser = this.todoData.findIndex(this.todoData.id ===userId);
+  //   return foundUser;
+  // })
 
-  }
+  
 
   getTodos(){
     return this.todoData;
+  }
+
+  saveTodo(todos: Todos){
+    this.todoData.push(todos);
   }
 
 }

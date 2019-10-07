@@ -18,7 +18,7 @@
     </div>
 
     <div class="col">
-      <button class="btn btn-info float-right" (click)="addTodo()">
+      <button class="btn btn-info float-right" (click)="addModal()">
         Add Todo
       </button>
       <button routerLink="/users" class="btn btn-info mr-2 float-right">
@@ -28,8 +28,8 @@
   </div>
 
   <div class="row">
-    <table class="table table-striped" *ngIf="filteredData.length > 1">
-      <thead *ngIf="filteredData.length > 1">
+    <table class="table table-striped" *ngIf="filteredData.length > 0">
+      <thead *ngIf="filteredData.length > 0">
         <tr class="bg-secondary text-white">
           <th>#</th>
           <th>Tasks</th>
@@ -49,12 +49,18 @@
           <td>{{ todos.owner }}</td>
           <td>
             <button
-              class="btn btn-outline-primary mb-2 mr-2"
-              (click)="openModal(content)"
+              class="btn btn-outline-success mb-2 mr-2"
+              (click)="openModal()"
             >
               Edit
             </button>
-            <a (click)="onDelete(user)">Delete</a>
+
+            <button
+            class="btn btn-outline-danger mb-2 mr-2"
+            (click)="delModal()"
+          >
+            Delete
+          </button>
           </td>
         </tr>
       </tbody>
@@ -69,71 +75,6 @@
     </table>
   </div>
 
-<ngb-pagination [collectionSize]="70" [(page)]="page" [directionLinks]="false"></ngb-pagination>
-
-  <ng-template #content let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title">Edit Information</h4>
-        <button
-          type="button"
-          class="close"
-          aria-label="Close"
-          (click)="modal.dismiss('Cross click')"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="">
-        <div class="modal-body">
-          <div class="container">
-            <div>
-              <div class="form-group">
-                <label for="todoId">Id:</label>
-                <input type="text" class="form-control" id="todoId"/>
-              </div>
-              <div class="form-group">
-                <label for="todo-name">Name:</label>
-                <input type="text" class="form-control" id="todo-name" />
-              </div>
-    
-              <div class="form-group">
-                <label for="description">Description:</label>
-                <input type="text" class="form-control" id="description" />
-              </div>
-    
-              <div class="form-group">
-                <label for="Status">Status:</label>
-                <input type="text" class="form-control" id="status" />
-              </div>
-    
-              <div class="form-group">
-                <label for="owner">Select Owner</label>
-                <select class="form-control" id="owner">
-                  <option>Select</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-light"
-            (click)="modal.close('Close click')"
-          >
-            Cancel
-          </button>
-    
-          <button type="submit" class="btn btn-primary float-right ">
-            Save Changes
-          </button>
-        </div>
-      </form>
-    </ng-template>
+<!-- <ngb-pagination [collectionSize]="70" [(page)]="page" [directionLinks]="false"></ngb-pagination> -->
     
 </div>

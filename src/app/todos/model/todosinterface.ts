@@ -1,4 +1,4 @@
-export class Todos {
+export interface Todos {
     id: string;
     name: string;
     description: string;

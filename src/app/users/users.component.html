@@ -28,8 +28,8 @@
   </div>
 
   <div class="row">
-    <table class="table table-striped"  *ngIf="filteredData.length > 1">
-      <thead *ngIf="filteredData.length > 1">
+    <table class="table table-striped"  *ngIf="filteredData.length > 0">
+      <thead *ngIf="filteredData.length > 0">
         <tr class="bg-secondary text-white">
           <th>#</th>
           <th>First Name</th>
@@ -50,8 +50,20 @@
             <a routerLink="/todos/{{ user.id }}">View Todos</a>
           </td>
           <td>
-            <a routerLink="/users/edit">Edit</a> |
-            <a (click)="onDelete(user)">Delete</a>
+            <button
+              class="btn btn-outline-success mb-2 mr-2"
+              (click)="openModal()"
+            >
+              Edit
+            </button> 
+
+            <button
+              class="btn btn-outline-danger mb-2 mr-2"
+              (click)="delModal()"
+            >
+              Delete
+            </button> 
+            
           </td>
         </tr>
       </tbody>
