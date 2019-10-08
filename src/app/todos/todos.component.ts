@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { TodosServiceService } from './service/todos-service.service';
 import { Todos } from './model/todosinterface';
@@ -16,12 +16,12 @@ export class TodosComponent implements OnInit {
 
   title = 'my-app';
 
-  page = 4;
-
   searchText : string;
-
-  @Input() todos: Todos
-  @Output() passEntry: EventEmitter<any> = new EventEmitter();
+  page: number;
+  collectionSize: number;
+  pageSize: number;
+  todos: Todos[];
+  
 
   filteredData: Todos[];
 
@@ -55,7 +55,8 @@ export class TodosComponent implements OnInit {
   }
 
   loadData(){
-    this.filteredData = this.service.getTodos();
+    this.todos = this.service.getTodos();
+    this.collectionSize = this.service.getLength();
   }
 
   onSearch(){
@@ -86,49 +87,126 @@ export class TodosComponent implements OnInit {
     console.log(todos);
   }
 
-  // addTodo() {
-  //   this.router.navigate(['addtodos']);
+  
+  // openModal(){
+  //   const modalRef = this.modalService.open(ModalComponent);
+  //   //modalRef.componentInstance.title = "Edit Todo";
+
   // }
 
-  passBack() {
-    this.passEntry.emit(this.todos);
-  }
-  
-  openModal(){
-    const modalRef = this.modalService.open(ModalComponent);
-    modalRef.componentInstance.title = "Edit Todo";
-
-    // modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
-    //   console.log(receivedEntry);
-    // })
-  }
-
-  delModal(){
+  delModal(todo: Todos){
     const modalRef = this.modalService.open(DelmodalComponent);
+
+    modalRef.result.then(result => {
+      if(result === 'deleted'){
+        this.toast.showSuccess('Deleted');
+      }
+         
+       
+    })
     
   }
 
-  addModal(todos: Todos) {
+  addModal(todo: Todos) {
     const modalRef = this.modalService.open(ModalComponent);
-    modalRef.componentInstance.title = "Add Todos";
+    modalRef.componentInstance.todo = todo;
 
     modalRef.result.then(result => {
-      if(result){
-      
-        this.filteredData = [
-         
-
-        ]
-         
-
-
-       return this.service.saveTodo(todos);
+      if(result === 'added'){
+        this.toast.showSuccess("Added")
+      }else if(result === 'updated'){
+        this.toast.showSuccess('Updated')
       }
+         
+       
     })
   }
 
   
 
+
+ 
+  // todosData: Todo[];
+  // searchText: string;
+  // collectionSize: number;
+  // pageSize = 5;
+  // page: number;
+  // showResultText: boolean;
+  // resultLength: number;
+
+
+  // ngOnInit() {
+  //   this.activatedRoute.queryParams.subscribe((params: Params) => {
+  //     const pageQ = params["page"];
+  //     const searchQ = params["search"];
+  //     this.page = pageQ ? parseInt(pageQ) : 1;
+  //     this.searchText = searchQ ? searchQ : null;
+  //     this.onPageChange();
+  //   });
+  // }
+
+  // onPageChange() {
+  //   if (this.searchText) {
+  //     this.router.navigate(["/todos"], {
+  //       queryParams: { page: this.page, search: this.searchText }
+  //     });
+  //     this.loadTodosDataFiltered();
+  //     this.showResultText = true;
+  //     this.resultLength = this.collectionSize;
+  //   } else {
+  //     this.router.navigate(["/todos"], { queryParams: { page: this.page } });
+  //     this.loadTodosData();
+  //     this.showResultText = false;
+  //   }
+  // }
+  // onSearch() {
+  //   this.onPageChange();
+  // }
+
+  // onDelete(todo: Todo) {
+  //   const modalRef = this.modalService.open(TodoDeleteComponent);
+  //   modalRef.componentInstance.todo = todo;
+  //   modalRef.result.then(result => {
+  //     if (result) {
+  //       this.onPageChange();
+  //       this.toastService.showSuccess("Delete Success");
+  //     } else {
+  //       //FAILED
+  //     }
+  //   });
+  // }
+
+  // openTodoForm(todo: Todos) {
+  //   const modalRef = this.modalService.open(TodoFormComponent);
+  //   modalRef.componentInstance.todo = todo;
+  //   modalRef.result.then(result => {
+  //     if (result === "a-success") {
+  //       this.onPageChange();
+  //       this.service.showSuccess("Creation Success");
+  //     } else if (result === "u-success") {
+  //       this.onPageChange();
+  //       this.service.showSuccess("Update Success");
+  //     } else {
+  //       //FAILED
+  //     }
+  //   });
+  // }
+
+  // loadTodosData() {
+  //   this.todosData = this.service.getTodos(this.page, this.pageSize);
+  //   this.collectionSize = this.service.getTodosLength();
+  // }
+
+  // loadTodosDataFiltered() {
+  //   const searchText = this.searchText.toLowerCase();
+  //   this.todosData = this.service.getTodosFiltered(
+  //     this.page,
+  //     this.pageSize,
+  //     searchText
+  //   );
+  //   this.collectionSize = this.service.getTodosLengthFiltered(searchText);
+  // }
 }
+
 
 

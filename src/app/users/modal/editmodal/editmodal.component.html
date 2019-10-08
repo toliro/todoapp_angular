@@ -4,7 +4,7 @@
     type="button"
     class="close"
     aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
+    (click)="activeModal.dismiss()"
   >
     <span aria-hidden="true">&times;</span>
   </button>
@@ -13,28 +13,28 @@
   <div class="modal-body">
     <div class="container">
       <div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="todoId">Id:</label>
           <input type="text" class="form-control" id="todoId" />
-        </div>
+        </div> -->
         <div class="form-group">
           <label for="fname">First Name:</label>
-          <input type="text" class="form-control" id="fname" />
+          <input type="text" [(ngModel)]="fname" class="form-control" name="fname" />
         </div>
 
         <div class="form-group">
           <label for="lname">Last Name:</label>
-          <input type="text" class="form-control" id="lname" />
+          <input type="text" [(ngModel)]="lname" class="form-control" name="lname" />
         </div>
 
         <div class="form-group">
           <label for="occupation">Occupation:</label>
-          <input type="text" class="form-control" id="occupation" />
+          <input type="text" [(ngModel)]="occupation" class="form-control" name="occupation" />
         </div>
 
         <div class="form-group">
-          <label for="owner">Profile Picture</label>
-          <input type="text" class="form-control" id="profile" />
+          <label for="profile">Profile Picture</label>
+          <input type="text" [(ngModel)]="profile" class="form-control" name="profile" />
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
     <button
       type="button"
       class="btn btn-light"
-      (click)="activeModal.close('Save click')"
+      (click)="activeModal.close()"
     >
       Cancel
     </button>
@@ -51,10 +51,10 @@
     <button
       type="submit"
       class="btn btn-primary float-right"
-      (click)="showSuccess()"
-      ngbTooltip="Will disappear in 10s"
+      (click)="submit()"
+      
     >
-      Save Changes
+      {{users ? 'Update' : 'Create'}}
     </button>
   </div>
 </form>

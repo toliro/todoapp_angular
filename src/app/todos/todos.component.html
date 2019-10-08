@@ -3,7 +3,7 @@
     <h1 class="display-4 ml-2">Todos</h1>
   </div>
 
-  <span *ngIf="filteredData.length === 0">No result</span>
+  <span *ngIf="todos.length === 0">No result</span>
 
   <div class="row mb-2 mt-2">
     <div>
@@ -28,8 +28,8 @@
   </div>
 
   <div class="row">
-    <table class="table table-striped" *ngIf="filteredData.length > 0">
-      <thead *ngIf="filteredData.length > 0">
+    <table class="table table-striped" *ngIf="todos.length > 0">
+      <thead *ngIf="todos.length > 0">
         <tr class="bg-secondary text-white">
           <th>#</th>
           <th>Tasks</th>
@@ -41,16 +41,16 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let todos of filteredData">
-          <td>{{ todos.id }}</td>
-          <td>{{ todos.name }}</td>
-          <td>{{ todos.description }}</td>
-          <td>{{ todos.status }}</td>
-          <td>{{ todos.owner }}</td>
+        <tr *ngFor="let todo of todos">
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.name }}</td>
+          <td>{{ todo.description }}</td>
+          <td>{{ todo.status }}</td>
+          <td>{{ todo.owner }}</td>
           <td>
             <button
               class="btn btn-outline-success mb-2 mr-2"
-              (click)="openModal()"
+              (click)="addModal()"
             >
               Edit
             </button>
@@ -68,13 +68,15 @@
       <tfoot>
         <tr>
           <td class="p-2" colspan="6">
-            <!-- Showing {{ filteredData.length }} results of {{ .length }}. -->
+            Showing {{ todos.length }} results of {{ todos.length }}.
           </td>
         </tr>
       </tfoot>
     </table>
   </div>
 
-<!-- <ngb-pagination [collectionSize]="70" [(page)]="page" [directionLinks]="false"></ngb-pagination> -->
+<div>
+  <ngb-pagination [collectionSize]="1" [(page)]="page" [directionLinks]="true"></ngb-pagination>
+</div>
     
 </div>

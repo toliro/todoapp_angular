@@ -4,7 +4,7 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="activeModal.dismiss('Cross click')"
+      (click)="activeModal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -26,7 +26,7 @@
       <button
         type="button"
         class="btn btn-light"
-        (click)="activeModal.close('Save click')"
+        (click)="activeModal.close()"
       >
         Cancel
       </button>
@@ -35,9 +35,8 @@
         type="submit"
         class="btn btn-primary float-right"
         (click)="showSuccess()"
-        ngbTooltip="Will disappear in 10s"
       >
-        Save Changes
+        Confirm
       </button>
     </div>
   </form>

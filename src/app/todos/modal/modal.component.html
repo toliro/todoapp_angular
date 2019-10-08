@@ -4,37 +4,37 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="activeModal.dismiss('Cross click')"
+      (click)="activeModal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form action="">
+  <form class="form">
     <div class="modal-body">
       <div class="container">
         <div>
+          <!-- <div class="form-group">
+            <label for="id">Id:</label>
+            <input type="text" [(ngModel)]="id" class="form-control" id="todoId" name="id" />
+          </div> -->
           <div class="form-group">
-            <label for="todoId">Id:</label>
-            <input type="text" class="form-control" id="todoId" />
-          </div>
-          <div class="form-group">
-            <label for="todo-name">Name:</label>
-            <input type="text" class="form-control" id="todo-name" />
+            <label for="name">Name:</label>
+            <input type="text" [(ngModel)]="name" class="form-control" name="name" />
           </div>
 
           <div class="form-group">
             <label for="description">Description:</label>
-            <input type="text" class="form-control" id="description" />
+            <input type="text" [(ngModel)]="description" class="form-control" name="description" />
           </div>
 
           <div class="form-group">
             <label for="Status">Status:</label>
-            <input type="text" class="form-control" id="status" />
+            <input type="text" [(ngModel)]="status" class="form-control" name="status" />
           </div>
 
           <div class="form-group">
             <label for="owner">Select Owner</label>
-            <select class="form-control" id="owner">
+            <select class="form-control" [(ngModel)]="owner" name="owner">
               <option>Select</option>
               <option>1</option>
               <option>2</option>
@@ -50,7 +50,7 @@
       <button
         type="button"
         class="btn btn-light"
-        (click)="activeModal.close('Save click')"
+        (click)="activeModal.close()"
       >
         Cancel
       </button>
@@ -58,10 +58,8 @@
       <button
         type="submit"
         class="btn btn-primary float-right"
-        (click)="addTodo()"
-        ngbTooltip="Will disappear in 10s"
-      >
-        Save Changes
+        (click)="submit()"
+      >{{ todo  ? 'Update' : 'Create' }}
       </button>
     </div>
   </form>

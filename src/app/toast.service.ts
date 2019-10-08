@@ -6,13 +6,21 @@ import { Injectable } from '@angular/core';
 export class ToastService {
   toasts: any[] = [];
 
-  show(header: string, body: string) {
-    this.toasts.push({ header, body });
+  show(txt: string, body: any = {}) {
+    this.toasts.push({ txt, ...body });
   }
 
   remove(toast) {
     this.toasts = this.toasts.filter(t => t != toast);
   }
 
-  constructor() { }
+  constructor() { } 
+
+  showSuccess(txt: string) {
+    this.show(txt, {
+      autohide: true,
+      classname: "p-0 m-0 text-center bg-success text-light",
+      delay: 5000
+    });
+  }
 }

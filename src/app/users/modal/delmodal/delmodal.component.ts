@@ -12,10 +12,5 @@ export class DelmodalComponent implements OnInit {
 
   ngOnInit() {
   }
-  
-
-  close(){
-    this.activeModal.close();
-  }
 
 }

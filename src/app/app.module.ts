@@ -13,10 +13,10 @@ import { AddusersModule } from './addusers/addusers.module';
 import { EditusersModule } from './editusers/editusers.module';
 import { TodosRoutingModule } from './todos/todos-routing.module';
 import { TodosServiceService } from './todos/service/todos-service.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbToast, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserRoutingModule } from './users/users-routing.module';
-import { ModalComponent } from './todos/modal/modal.component';
-import { EditmodalComponent } from './users/modal/editmodal/editmodal.component';
+import { UserService } from './users/service/user.service';
+import { ToastService } from './toast.service';
 
 @NgModule({
   declarations: [
@@ -33,9 +33,11 @@ import { EditmodalComponent } from './users/modal/editmodal/editmodal.component'
     AddtodosModule,
     AddusersModule,
     EditusersModule,
-    NgbModule
+    NgbModule,
+    NgbToastModule,
+    NgbToastModule
   ],
-  providers: [TodosServiceService],
+  providers: [TodosServiceService, UserService,ToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

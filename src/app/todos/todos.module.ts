@@ -7,6 +7,7 @@ import { TodosRoutingModule } from './todos-routing.module';
 import { ModalComponent } from './modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DelmodalComponent } from './modal/delmodal/delmodal.component';
+import { TodosServiceService } from './service/todos-service.service';
 
 @NgModule({
   declarations: [TodosComponent, ModalComponent, DelmodalComponent],
@@ -20,6 +21,7 @@ import { DelmodalComponent } from './modal/delmodal/delmodal.component';
   entryComponents: [
     ModalComponent,
     DelmodalComponent
-  ]
+  ],
+  providers: [TodosServiceService]
 })
 export class TodosModule { }
