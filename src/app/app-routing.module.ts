@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersComponent } from './users/users.component';
-import { TodosComponent } from './todos/todos.component';
-import { AddtodosComponent } from './addtodos/addtodos.component';
-import { AddusersComponent } from './addusers/addusers.component';
-import { EdittodosComponent } from './edittodos/edittodos.component';
-import { EditusersComponent } from './editusers/editusers.component';
+
 
 const routes : Routes = [
     {
@@ -22,19 +17,6 @@ const routes : Routes = [
         path: ' ',
         redirectTo: 'users',
         pathMatch: 'full'
-    },
-
-    {
-        path: 'addtodos/new',
-        component: AddtodosComponent
-    },
-    {
-        path: 'addusers/new',
-        component: AddusersComponent
-    },
-    {
-        path: 'todosedit/edit',
-        component: EdittodosComponent
     }
 ];
 

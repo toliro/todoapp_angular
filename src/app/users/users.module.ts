@@ -4,16 +4,24 @@ import { UsersComponent } from './users.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserRoutingModule } from './users-routing.module';
+import { EditmodalComponent } from './modal/editmodal/editmodal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DelmodalComponent } from './modal/delmodal/delmodal.component';
 
 
 
 @NgModule({
-  declarations: [UsersComponent],
+  declarations: [UsersComponent, EditmodalComponent, DelmodalComponent],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
-    UserRoutingModule
+    UserRoutingModule,
+    NgbModule
+  ],
+  entryComponents: [
+    EditmodalComponent,
+    DelmodalComponent
   ]
 })
 export class UsersModule { }

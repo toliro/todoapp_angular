@@ -3,8 +3,6 @@
     <h1 class="display-4 ml-2">Users</h1>
   </div>
 
-  <span *ngIf="filteredData.length === 0">No result</span>
-
   <div class="row mb-2 mt-2">
     <div>
       <input
@@ -18,7 +16,7 @@
     </div>
 
     <div class="col">
-      <button class="btn btn-info float-right" (click)="addUser()">
+      <button class="btn btn-info float-right" (click)="openModal()">
         Add User
       </button>
       <button routerLink="/todos" class="btn btn-info mr-2 float-right">
@@ -28,8 +26,8 @@
   </div>
 
   <div class="row">
-    <table class="table table-striped"  *ngIf="filteredData.length > 1">
-      <thead *ngIf="filteredData.length > 1">
+    <table class="table table-striped" >
+      <thead >
         <tr class="bg-secondary text-white">
           <th>#</th>
           <th>First Name</th>
@@ -41,7 +39,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let user of filteredData">
+        <tr *ngFor="let user of users">
           <td>{{ user.id }}</td>
           <td>{{ user.firstname }}</td>
           <td>{{ user.lastname }}</td>
@@ -50,8 +48,20 @@
             <a routerLink="/todos/{{ user.id }}">View Todos</a>
           </td>
           <td>
-            <a routerLink="/users/edit">Edit</a> |
-            <a (click)="onDelete(user)">Delete</a>
+            <button
+              class="btn btn-outline-success mb-2 mr-2"
+              (click)="openModal(user)"
+            >
+              Edit
+            </button> 
+
+            <button
+              class="btn btn-outline-danger mb-2 mr-2"
+              (click)="delModal(user)"
+            >
+              Delete
+            </button> 
+            
           </td>
         </tr>
       </tbody>
@@ -59,10 +69,14 @@
       <tfoot>
         <tr>
           <td class="p-2" colspan="6">
-            Showing {{ filteredData.length }} results of {{ userData.length }}.
+            <div>
+              <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize" [(page)]="page" (pageChange)="onSearch()" [directionLinks]="true"></ngb-pagination>
+            </div>
           </td>
         </tr>
       </tfoot>
     </table>
+
+   
   </div>
 </div>

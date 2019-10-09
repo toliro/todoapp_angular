@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { TodosServiceService } from './service/todos-service.service';
 import { Todos } from './model/todosinterface';
 import { ModalComponent } from './modal/modal.component';
+import { ToastService } from '../toast.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DelmodalComponent } from './modal/delmodal/delmodal.component';
 
 @Component({
   selector: 'app-todos',
@@ -13,84 +16,88 @@ export class TodosComponent implements OnInit {
 
   title = 'my-app';
 
-  page = 4;
-
   searchText : string;
-
-  modal: ModalComponent;
-
-  @Input() todos: Todos
-
+  page: number;
+  collectionSize: number;
+  pageSize: number = 4;
+  todoLength: number;
+  todos: Todos[];
+  
   filteredData: Todos[];
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private service: TodosServiceService
-    ){
+    private activeRoute: ActivatedRoute,
+    private service: TodosServiceService,
+    private modalService: NgbModal,
+    private toast: ToastService   ){
     this.loadData();
     // this.router = router;
   }
   ngOnInit(){
-    //get the user id from url
-    console.log('[TodosComponent] On Init!')
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      const forPage = params["page"];
+      const search = params["search"];
+      this.page = forPage ? parseInt(forPage) : 1;
+      this.searchText = search ? search : null;
+      this.onSearch();
+    });
+  }
 
-    console.log(this.activatedRoute);
-
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) =>{
-        console.log("Params");
-        const userId = paramMap.get('userId');
-        console.log(userId);
-       
-        if (userId) {
-          // Filter todos by owner (user id)
-          this.filteredData = this.service.getTodos().filter((todo) => {
-            return todo.owner === userId;
-          });
-        }
-    })
+  loadFilteredTodos() {
+    const searchText = this.searchText.toLowerCase();
+    this.todos = this.service.getFilteredTodos(this.page,this.pageSize,searchText);
+    this.collectionSize = this.service.getFilteredTodos(this.page,this.pageSize,searchText).length;
   }
 
   loadData(){
-    this.filteredData = this.service.getTodos();
+    this.todos = this.service.getPageTodos(this.page, this.pageSize);
+    this.collectionSize = this.service.getAllTodos().length;
   }
 
   onSearch(){
     console.log(this.searchText);
-
-    const searchText = this.searchText.toLowerCase();
-
-    if(this.searchText){
-      this.filteredData = this.service.getTodos().filter((todos)=>{
-        return todos.name.toLowerCase().includes(this.searchText) || 
-        todos.description.toLowerCase().includes(this.searchText) ||
-        todos.status.toLowerCase().includes(this.searchText) ||
-        todos.owner.toLowerCase().includes(this.searchText)
-      })
-    }else{
-      this.filteredData = this.service.getTodos();
+    if (this.searchText) {
+      this.router.navigate(["/todos"], {queryParams: { page: this.page, search: this.searchText }});
+      this.loadFilteredTodos();
+      this.todoLength = this.collectionSize;
+    } else {
+      this.router.navigate(["/todos"], { queryParams: { page: this.page } });
+      this.loadData();
     }
     
   }
 
-  onUpdate(todos){
-    console.log("update");
-    console.log(todos);
+
+  delModal(todo: Todos){
+    const modalRef = this.modalService.open(DelmodalComponent);
+    modalRef.componentInstance.todo = todo;
+
+    modalRef.result.then(result => {
+      if(result === 'deleted'){
+        this.onSearch();
+        this.toast.showSuccess('Deleted');
+      }
+         
+       
+    })
+    
   }
 
-  onDelete(todos){
-    console.log("delete");
-    console.log(todos);
-  }
+  addModal(todo: Todos) {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.todo = todo;
 
-  addTodo() {
-    this.router.navigate(['addtodos/new']);
+    modalRef.result.then(result => {
+      if(result === 'added'){
+        this.onSearch();
+        this.toast.showSuccess("Added")
+      }else if(result === 'updated'){
+        this.onSearch();
+        this.toast.showSuccess('Updated')
+      }
+         
+       
+    })
   }
-  openModal(content){
-    this.modal.openModal(content);
-  }
-
-
 }
-
-

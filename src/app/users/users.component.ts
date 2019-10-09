@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditmodalComponent } from './modal/editmodal/editmodal.component';
+import { DelmodalComponent } from './modal/delmodal/delmodal.component';
+import { UserService } from './service/user.service';
+import { Users } from './model/user';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-users',
@@ -11,120 +17,92 @@ export class UsersComponent implements OnInit {
   title = 'my-app';
 
   searchText : string;
+  page: number;
+  collectionSize: number;
+  pageSize: number = 4;
+  dataLength: number;
+  users: Users[];
+  
 
-  userData = [
-    {
-        id: "1",
-        firstname: "Rolito",
-        lastname: "Valles",
-        occupation:"Web Developer",
-        profile_picture: "https://unsplash.com/photos/P2FNYWOlgZs"
-    },
-    {
-        id: "2",
-        firstname: "Riche",
-        lastname: "Jimenez",
-        occupation:"Web Developer",
-        profile_picture: "https://unsplash.com/photos/JAkWUtmsFXM"
-    },
-    {
-        id: "3",
-        firstname: "Karen",
-        lastname: "Carabuena",
-        occupation:"Software Engineer",
-        profile_picture: "https://unsplash.com/photos/4Qa0A7o8Wsg"
-    },
-    {
-        id: "4",
-        firstname: "Vannessa",
-        lastname: "Pasaan",
-        occupation:"Software Test Engineer",
-        profile_picture: "https://unsplash.com/photos/pNrMhpntZFM"
-    },
-    {
-        id: "5",
-        firstname: "Adrian",
-        lastname: "Sumagang",
-        occupation:"Web Developer",
-        profile_picture: "https://unsplash.com/photos/NorYfP4rwmQ"
-    },
-    {
-        id: "6",
-        firstname: "Jayson",
-        lastname: "Custodio",
-        occupation:"Software Developer",
-        profile_picture: "https://unsplash.com/photos/XxJ_HIXw25M"
-    },
-    {
-        id: "7",
-        firstname: "Jan Carlo",
-        lastname: "Nabaja",
-        occupation:"Web Developer",
-        profile_picture: "https://unsplash.com/photos/sRYaHTzPGfU"
-    },
-    {
-        id: "8",
-        firstname: "Winzel",
-        lastname: "Del Rosario",
-        occupation:"Software Developer",
-        profile_picture: "https://unsplash.com/photos/X2YO8KFxgEM"
-    },
-    {
-        id: "9",
-        firstname: "Lovely",
-        lastname: "Canales",
-        occupation:"Web Developer",
-        profile_picture: "https://unsplash.com/photos/dLFgkoUuoac"
-    },
-    {
-        id: "10",
-        firstname: "Jemalyn",
-        lastname: "Goyo",
-        occupation:"Web Developer",
-        profile_picture: "https://unsplash.com/photos/ua9bUXzUUpw"
-    }
-  ]
 
-  filteredData: any[];
+  filteredData: Users[];
 
-  constructor(private router: Router){
-    this.filteredData = this.userData;
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private modalService: NgbModal,
+    private service: UserService,
+    private toast: ToastService
+    ){
+    
   }
   
   ngOnInit(){
-
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      const forPage = params["page"];
+      const search = params["search"];
+      this.page = forPage ? parseInt(forPage) : 1;
+      this.searchText = search ? search : null;
+      this.onSearch();
+    });
   }
 
-  onSearch(){
-    console.log(this.searchText);
-
-    const searchText = this.searchText.toLowerCase();
-
-    if(this.searchText){
-      this.filteredData = this.userData.filter((users)=>{
-        return users.firstname.toLowerCase().includes(this.searchText) || 
-        users.lastname.toLowerCase().includes(this.searchText) ||
-        users.occupation.toLowerCase().includes(this.searchText)
-      })
-    }else{
-      this.filteredData = this.userData;
-    }
+  loadData(){
+    this.users = this.service.getPageUsers(this.page, this.pageSize);
+    this.collectionSize = this.service.getAllUsers().length;
     
   }
 
-  onUpdate(users){
-    console.log("update");
-    console.log(users);
+  loadFilteredUsers() {
+    const searchText = this.searchText.toLowerCase();
+    this.users = this.service.getFilteredUsers(this.page,this.pageSize,searchText);
+    this.collectionSize = this.service.getFilteredUsers(this.page,this.pageSize,searchText).length;
   }
 
-  onDelete(users){
-    console.log("delete");
-    console.log(users);
+  onSearch(){
+    if (this.searchText) {
+      this.router.navigate(["/users"], {queryParams: { page: this.page, search: this.searchText }});
+      this.loadFilteredUsers();
+      this.dataLength = this.collectionSize;
+    } else {
+      this.router.navigate(["/users"], { queryParams: { page: this.page } });
+      this.loadData();
+    }
   }
 
-  addUser() {
-    this.router.navigate(['addusers/new']);
+  openModal(user: Users){
+    const modalRef = this.modalService.open(EditmodalComponent);
+    modalRef.componentInstance.user = user;
+
+    modalRef.result.then(result => {
+      if(result === 'added'){
+        this.onSearch();
+        this.toast.showSuccess("Added")
+      }else if(result === 'updated'){
+        this.onSearch();
+        this.toast.showSuccess('Updated')
+      }
+         
+       
+    })
+
+    
   }
 
+  delModal(user: Users){
+    const modalRef = this.modalService.open(DelmodalComponent);
+    modalRef.componentInstance.user= user;
+
+    modalRef.result.then(result => {
+      if(result === 'deleted'){
+        this.toast.showSuccess("Deleted")
+        this.onSearch();
+      }else{
+        this.onSearch();
+        this.toast.showSuccess('failed to delete')
+      }
+    })
+
+  }
 
 }

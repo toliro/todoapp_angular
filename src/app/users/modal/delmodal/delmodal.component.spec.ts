@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddtodosComponent } from './addtodos.component';
+import { DelmodalComponent } from './delmodal.component';
 
-describe('AddtodosComponent', () => {
-  let component: AddtodosComponent;
-  let fixture: ComponentFixture<AddtodosComponent>;
+describe('DelmodalComponent', () => {
+  let component: DelmodalComponent;
+  let fixture: ComponentFixture<DelmodalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddtodosComponent ]
+      declarations: [ DelmodalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddtodosComponent);
+    fixture = TestBed.createComponent(DelmodalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
