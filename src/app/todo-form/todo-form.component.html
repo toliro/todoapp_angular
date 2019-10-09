@@ -1,0 +1,77 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ modalTitle }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form class="form">
+  <div class="modal-body">
+    <div class="container">
+      <div>
+        <!-- <div class="form-group">
+            <label for="id">Id:</label>
+            <input type="text" [(ngModel)]="id" class="form-control" id="todoId" name="id" />
+          </div> -->
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            [(ngModel)]="name"
+            class="form-control"
+            name="name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input
+            type="text"
+            [(ngModel)]="description"
+            class="form-control"
+            name="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="Status">Status:</label>
+          <input
+            type="text"
+            [(ngModel)]="status"
+            class="form-control"
+            name="status"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="owner">Select Owner</label>
+          <select class="form-control" [(ngModel)]="owner" name="owner">
+            <option>Select</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="activeModal.close()">
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-primary float-right"
+      (click)="submit()"
+    >
+      {{ todo ? "Update" : "Create" }}
+    </button>
+  </div>
+</form>

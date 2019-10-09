@@ -14,10 +14,14 @@ import { NgbModule, NgbToast, NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
 import { UserRoutingModule } from './users/users-routing.module';
 import { UserService } from './users/service/user.service';
 import { ToastService } from './toast.service';
+import { TodoFormComponent } from './todo-form/todo-form.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodoFormComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
