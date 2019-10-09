@@ -21,18 +21,6 @@ const routes : Routes = [
         path: ' ',
         redirectTo: 'users',
         pathMatch: 'full'
-    },
-
-    {
-        path: 'addtodos',
-        component: AddtodosComponent
-    },
-    {
-        path: 'addusers',
-        component: AddusersComponent
-    },{
-        path: 'editusers',
-        component: EditusersComponent
     }
 ];
 

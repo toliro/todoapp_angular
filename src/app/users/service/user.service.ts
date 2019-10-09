@@ -82,25 +82,21 @@ export class UserService {
     }
   ]
 
-  onUpdate(){
-
-  }
-
-  onDelete(){
-
-  }
-
-  getUsers(){
+  getAllUsers(): Users[]{
     return this.user;
+  }
+
+  getPageUsers(page: number, pageSize: number): Users[] {
+    return this.user.slice((page - 1) * pageSize, page * pageSize);
   }
 
 
   addUser(user: Users): Users {
-    //increment id
-    var Id: string = (
+    //increment id with the id of the last element
+    var userId: string = (
       parseInt(this.user[this.user.length - 1].id) + 1
     ).toString();
-    user.id = Id;
+    user.id = userId;
     this.user.push(user);
     return user;
   }
@@ -108,8 +104,6 @@ export class UserService {
   deleteUser(id: string): Users {
     const userId = this.findUser(id);
     const index = this.user.indexOf(userId);
-    // //delete all todos from this user
-    // this.todoService.deleteTodo(userId);
     return userId ? this.user.splice(index, 1)[0] : null;
   }
 
@@ -129,40 +123,16 @@ export class UserService {
     return findUser[0];
   }
 
-//   getUsers(pageNum: number, pageSize: number): User[] {
-//     return this.users.slice((pageNum - 1) * pageSize, pageNum * pageSize);
-//   }
-
-  getAllUsers(): Users[] {
-    return this.user;
-  }
-  getUsersLength(): number {
-    return this.user.length;
-  }
-
-  getFilteredUsers(
-    pageNum: number,
-    pageSize: number,
-    searchText: string
-  ): Users[] {
-    const usersFiltered = this.user.filter(user => {
+  getFilteredUsers(page: number,pageSize: number,searchText: string): Users[] {
+    const filteredUsers = this.user.filter(user => {
       return (
         user.firstname.toLowerCase().includes(searchText) ||
         user.lastname.toLowerCase().includes(searchText) ||
         user.occupation.toLowerCase().includes(searchText)
       );
     });
-    return usersFiltered.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+    return filteredUsers.slice((page - 1) * pageSize, page * pageSize);
   }
-//   getUsersLengthFiltered(searchText: string): number {
-//     const usersFiltered = this.users.filter(user => {
-//       return (
-//         user.firstName.toLowerCase().includes(searchText) ||
-//         user.lastName.toLowerCase().includes(searchText) ||
-//         user.occupation.toLowerCase().includes(searchText)
-//       );
-//     });
-//     return usersFiltered.length;
-//   }
+
 }
 

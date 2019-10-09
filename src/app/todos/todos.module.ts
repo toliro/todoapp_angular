@@ -21,7 +21,6 @@ import { TodosServiceService } from './service/todos-service.service';
   entryComponents: [
     ModalComponent,
     DelmodalComponent
-  ],
-  providers: [TodosServiceService]
+  ]
 })
 export class TodosModule { }

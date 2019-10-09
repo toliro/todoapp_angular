@@ -3,8 +3,6 @@
     <h1 class="display-4 ml-2">Users</h1>
   </div>
 
-  <span *ngIf="users.length === 0">No result</span>
-
   <div class="row mb-2 mt-2">
     <div>
       <input
@@ -28,8 +26,8 @@
   </div>
 
   <div class="row">
-    <table class="table table-striped"  *ngIf="users.length > 0">
-      <thead *ngIf="users.length > 0">
+    <table class="table table-striped" >
+      <thead >
         <tr class="bg-secondary text-white">
           <th>#</th>
           <th>First Name</th>
@@ -52,14 +50,14 @@
           <td>
             <button
               class="btn btn-outline-success mb-2 mr-2"
-              (click)="openModal()"
+              (click)="openModal(user)"
             >
               Edit
             </button> 
 
             <button
               class="btn btn-outline-danger mb-2 mr-2"
-              (click)="delModal()"
+              (click)="delModal(user)"
             >
               Delete
             </button> 
@@ -71,14 +69,14 @@
       <tfoot>
         <tr>
           <td class="p-2" colspan="6">
-            Showing {{ users.length }} results of {{ users.length }}.
+            <div>
+              <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize" [(page)]="page" (pageChange)="onSearch()" [directionLinks]="true"></ngb-pagination>
+            </div>
           </td>
         </tr>
       </tfoot>
     </table>
 
-    <div>
-      <ngb-pagination [collectionSize]="1" [(page)]="page" [directionLinks]="true"></ngb-pagination>
-    </div>
+   
   </div>
 </div>

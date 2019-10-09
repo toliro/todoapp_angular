@@ -11,7 +11,7 @@ import { UserService } from '../../service/user.service';
 export class EditmodalComponent implements OnInit {
 
   @Input() 
-  users: Users;
+  user: Users;
 
   fname: string;
   lname: string;
@@ -23,20 +23,19 @@ export class EditmodalComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal,private userservice: UserService) { }
 
   ngOnInit() {
-    this.title = this.users ? 'Edit User' : 'Add User';
-
-    this.fname = this.users ? this.users.firstname : "";
-    this.lname = this.users ? this.users.lastname : "";
-    this.occupation = this.users ? this.users.occupation :"";
-    this.profile = this.users ? this.users.profile: "";
+    this.title = this.user ? 'Edit User' : 'Add User';
+    this.fname = this.user ? this.user.firstname : "";
+    this.lname = this.user ? this.user.lastname : "";
+    this.occupation = this.user ? this.user.occupation :"";
+    this.profile = this.user ? this.user.profile: "";
 
   }
 
   submit() {
-    if (this.users) {
-      //Update Todo
+    if (this.user) {
+      //updating user
       let editUser: Users = {
-        id: this.users.id,
+        id: this.user.id,
         firstname: this.fname,
         lastname: this.lname,
         occupation: this.occupation,
@@ -50,15 +49,15 @@ export class EditmodalComponent implements OnInit {
         this.activeModal.close('fail');
       }
     } else {
-      //Create Todo
-      let addUser: Users = {
-        id: this.users.id,
+      //adding user
+      let adUser: Users = {
+        id: "",
         firstname: this.fname,
         lastname: this.lname,
         occupation: this.occupation,
         profile: this.profile,
       };
-      const result = this.userservice.addUser(addUser);
+      const result = this.userservice.addUser(adUser);
       if(result){
         this.activeModal.close('added')
       }else{

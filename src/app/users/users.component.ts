@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditmodalComponent } from './modal/editmodal/editmodal.component';
 import { DelmodalComponent } from './modal/delmodal/delmodal.component';
@@ -19,7 +19,8 @@ export class UsersComponent implements OnInit {
   searchText : string;
   page: number;
   collectionSize: number;
-  pageSize: number;
+  pageSize: number = 4;
+  dataLength: number;
   users: Users[];
   
 
@@ -33,48 +34,52 @@ export class UsersComponent implements OnInit {
     private service: UserService,
     private toast: ToastService
     ){
-    this.loadData();
+    
   }
   
   ngOnInit(){
-
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      const forPage = params["page"];
+      const search = params["search"];
+      this.page = forPage ? parseInt(forPage) : 1;
+      this.searchText = search ? search : null;
+      this.onSearch();
+    });
   }
 
-  onSearch(){
-    console.log(this.searchText);
-
-    const searchText = this.searchText.toLowerCase();
-
-    if(this.searchText){
-      this.filteredData = this.service.getUsers().filter((users)=>{
-        return users.firstname.toLowerCase().includes(this.searchText) || 
-        users.lastname.toLowerCase().includes(this.searchText) ||
-        users.occupation.toLowerCase().includes(this.searchText)
-      })
-    }else{
-      this.loadData();
-    }
+  loadData(){
+    this.users = this.service.getPageUsers(this.page, this.pageSize);
+    this.collectionSize = this.service.getAllUsers().length;
     
   }
 
-  onUpdate(users){
-    console.log("update");
-    console.log(users);
+  loadFilteredUsers() {
+    const searchText = this.searchText.toLowerCase();
+    this.users = this.service.getFilteredUsers(this.page,this.pageSize,searchText);
+    this.collectionSize = this.service.getFilteredUsers(this.page,this.pageSize,searchText).length;
   }
 
-  onDelete(users){
-    console.log("delete");
-    console.log(users);
+  onSearch(){
+    if (this.searchText) {
+      this.router.navigate(["/users"], {queryParams: { page: this.page, search: this.searchText }});
+      this.loadFilteredUsers();
+      this.dataLength = this.collectionSize;
+    } else {
+      this.router.navigate(["/users"], { queryParams: { page: this.page } });
+      this.loadData();
+    }
   }
 
   openModal(user: Users){
     const modalRef = this.modalService.open(EditmodalComponent);
-    modalRef.componentInstance.users = user;
+    modalRef.componentInstance.user = user;
 
     modalRef.result.then(result => {
       if(result === 'added'){
+        this.onSearch();
         this.toast.showSuccess("Added")
       }else if(result === 'updated'){
+        this.onSearch();
         this.toast.showSuccess('Updated')
       }
          
@@ -84,17 +89,20 @@ export class UsersComponent implements OnInit {
     
   }
 
-  delModal(){
+  delModal(user: Users){
     const modalRef = this.modalService.open(DelmodalComponent);
-    modalRef.componentInstance.name = "Modal";
+    modalRef.componentInstance.user= user;
+
+    modalRef.result.then(result => {
+      if(result === 'deleted'){
+        this.toast.showSuccess("Deleted")
+        this.onSearch();
+      }else{
+        this.onSearch();
+        this.toast.showSuccess('failed to delete')
+      }
+    })
 
   }
-  
-  loadData(){
-    this.users = this.service.getAllUsers();
-    this.collectionSize = this.service.getUsersLength();
-    
-  }
-
 
 }

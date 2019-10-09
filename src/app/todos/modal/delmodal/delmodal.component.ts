@@ -10,7 +10,7 @@ import { Todos } from '../../model/todosinterface';
 })
 export class DelmodalComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal, private service: TodosServiceService) { }
+  constructor(private activeModal: NgbActiveModal, private todoService: TodosServiceService) { }
 
   @Input()
   todo: Todos;
@@ -19,7 +19,7 @@ export class DelmodalComponent implements OnInit {
   }
 
   delete() {
-    const result = this.service.deleteTodo(this.todo.id);
+    const result = this.todoService.deleteTodo(this.todo.id);
     if (result) {
       this.activeModal.close("deleted");
     }

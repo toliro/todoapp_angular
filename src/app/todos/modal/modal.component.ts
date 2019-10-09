@@ -22,21 +22,21 @@ export class ModalComponent implements OnInit {
   status: Enumstatus;
   owner: string;
 
-  title: string;
+  modalTitle: string;
 
 
   ngOnInit() {
-    this.title = this.todo ? 'Edit Todo' : 'Add Todo';
-
+    this.modalTitle = this.todo ? 'Edit Todo' : 'Add Todo';
     this.name = this.todo ? this.todo.name : "";
     this.description = this.todo ? this.todo.description : "";
     this.status = this.todo ? this.todo.status : Enumstatus.open;
     this.owner = this.todo ? this.todo.owner: "";
+    console.log(this.todo)
   }
 
   submit() {
     if (this.todo) {
-      //Update Todo
+      //For updating todo
       let editTodo: Todos = {
         id: this.todo.id,
         name: this.name,
@@ -49,10 +49,10 @@ export class ModalComponent implements OnInit {
         this.activeModal.close('updated');
       }
       else{
-        this.activeModal.close('fail');
+        this.activeModal.close('failed');
       }
     } else {
-      //Create Todo
+      //For adding Todo
       let addTodo: Todos = {
         id: "",
         name: this.name,
@@ -64,7 +64,7 @@ export class ModalComponent implements OnInit {
       if(result){
         this.activeModal.close('added')
       }else{
-        this.activeModal.close("fail");
+        this.activeModal.close("failed");
       }
     }
   }

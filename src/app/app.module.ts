@@ -30,12 +30,8 @@ import { ToastService } from './toast.service';
     UserRoutingModule,
     TodosModule,
     TodosRoutingModule,
-    AddtodosModule,
-    AddusersModule,
-    EditusersModule,
     NgbModule,
     NgbToastModule,
-    NgbToastModule
   ],
   providers: [TodosServiceService, UserService,ToastService],
   bootstrap: [AppComponent]
