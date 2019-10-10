@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DelmodalComponent } from './delmodal.component';
+import { DelmodalComponent } from './DeleteUserModal.component';
 
 describe('DelmodalComponent', () => {
   let component: DelmodalComponent;

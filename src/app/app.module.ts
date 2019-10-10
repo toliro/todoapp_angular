@@ -9,19 +9,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';
 import { TodosRoutingModule } from './todos/todos-routing.module';
-import { TodosServiceService } from './todos/service/todos-service.service';
 import { NgbModule, NgbToast, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserRoutingModule } from './users/users-routing.module';
-import { UserService } from './users/service/user.service';
-import { ToastService } from './toast.service';
-import { TodoFormComponent } from './todo-form/todo-form.component';
-import { UserFormComponent } from './user-form/user-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TodoFormComponent,
-    UserFormComponent
+    AppComponent    
   ],
   imports: [
     BrowserModule,
@@ -33,8 +27,9 @@ import { UserFormComponent } from './user-form/user-form.component';
     TodosRoutingModule,
     NgbModule,
     NgbToastModule,
+    HttpClientModule
   ],
-  providers: [TodosServiceService, UserService,ToastService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

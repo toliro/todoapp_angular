@@ -1,11 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
-import { TodosServiceService } from './service/todos-service.service';
-import { Todos } from './model/todosinterface';
-import { ModalComponent } from './modal/modal.component';
-import { ToastService } from '../toast.service';
+import { Todos } from './model/todos';
+import { ModalComponent } from './modal/AddTodoModal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DelmodalComponent } from './modal/delmodal/delmodal.component';
+import { DelmodalComponent } from './modal/deletetodomodal/DeleteTodoModal.component';
+import { ToastService } from '../services/toast.service';
+import { TodoService } from '../services/todo.service';
+import { catchError } from "rxjs/operators";
+import { Page } from '../page/page';
 
 @Component({
   selector: 'app-todos',
@@ -16,25 +18,24 @@ export class TodosComponent implements OnInit {
 
   title = 'my-app';
 
-  searchText : string;
+  searchText: string;
   page: number;
   collectionSize: number;
   pageSize: number = 4;
   todoLength: number;
   todos: Todos[];
-  
-  filteredData: Todos[];
+
 
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private service: TodosServiceService,
+    private service: TodoService,
     private modalService: NgbModal,
-    private toast: ToastService   ){
+    private toast: ToastService) {
     this.loadData();
     // this.router = router;
   }
-  ngOnInit(){
+  ngOnInit() {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       const forPage = params["page"];
       const search = params["search"];
@@ -45,43 +46,56 @@ export class TodosComponent implements OnInit {
   }
 
   loadFilteredTodos() {
-    const searchText = this.searchText.toLowerCase();
-    this.todos = this.service.getFilteredTodos(this.page,this.pageSize,searchText);
-    this.collectionSize = this.service.getFilteredTodos(this.page,this.pageSize,searchText).length;
+    this.service.getTodos(this.page, this.pageSize).pipe(catchError(() => {
+      return null;
+    })
+    ).subscribe((reply: Page<Todos>) => {
+      this.todos = reply.content;
+      this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
+      this.todoLength = reply.totalElements > 0 ? this.collectionSize : 0;
+    })
   }
 
-  loadData(){
-    this.todos = this.service.getPageTodos(this.page, this.pageSize);
-    this.collectionSize = this.service.getAllTodos().length;
+  loadData() {
+    this.service.getTodos(this.page, this.pageSize).pipe(catchError(err => {
+      return err;
+    })
+    ).subscribe((reply: Page<Todos>) => {
+      this.todos = reply.content;
+      this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
+    })
   }
 
-  onSearch(){
+  onSearch() {
     console.log(this.searchText);
     if (this.searchText) {
-      this.router.navigate(["/todos"], {queryParams: { page: this.page, search: this.searchText }});
+      this.router.navigate(["/todos"], { queryParams: { page: this.page, search: this.searchText } });
       this.loadFilteredTodos();
       this.todoLength = this.collectionSize;
     } else {
       this.router.navigate(["/todos"], { queryParams: { page: this.page } });
       this.loadData();
     }
-    
+
   }
 
 
-  delModal(todo: Todos){
+  deleteModal(todo: Todos) {
     const modalRef = this.modalService.open(DelmodalComponent);
     modalRef.componentInstance.todo = todo;
 
     modalRef.result.then(result => {
-      if(result === 'deleted'){
-        this.onSearch();
-        this.toast.showSuccess('Deleted');
-      }
-         
-       
+      this.service.deleteTodos(result).pipe(catchError(err => {
+        return err;
+      })
+      ).subscribe((reply: Todos) => {
+        if (reply) {
+          this.onSearch();
+          this.toast.showSuccess('Todo Deleted Successfully');
+        }
+      })
     })
-    
+
   }
 
   addModal(todo: Todos) {
@@ -89,15 +103,36 @@ export class TodosComponent implements OnInit {
     modalRef.componentInstance.todo = todo;
 
     modalRef.result.then(result => {
-      if(result === 'added'){
+      if (todo) {
+        this.service.updateTodos(result).pipe(catchError(err => {
+          return err;
+        })
+        ).subscribe((reply: Todos) => {
+          if (reply) {
+            this.onSearch();
+            this.toast.showSuccess('Todo Updated Successfully')
+          }
+        })
+      } else {
+        this.service.addTodos(result).pipe(catchError(err => {
+          return err;
+        })
+        ).subscribe((reply: Todos) => {
+          if (reply) {
+            this.onSearch();
+            this.toast.showSuccess('Todo Added Successfully')
+          }
+        })
+      }
+      if (result === 'added') {
         this.onSearch();
         this.toast.showSuccess("Added")
-      }else if(result === 'updated'){
-        this.onSearch();
-        this.toast.showSuccess('Updated')
       }
-         
-       
+
+
     })
   }
+
+
+
 }

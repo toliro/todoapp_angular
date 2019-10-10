@@ -4,9 +4,9 @@ import { UsersComponent } from './users.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserRoutingModule } from './users-routing.module';
-import { EditmodalComponent } from './modal/editmodal/editmodal.component';
+import { EditmodalComponent } from './modal/editmodal/EditUserModal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DelmodalComponent } from './modal/delmodal/delmodal.component';
+import { DelmodalComponent } from './modal/delmodal/DeleteUserModal.component';
 
 
 

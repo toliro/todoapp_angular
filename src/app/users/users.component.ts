@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditmodalComponent } from './modal/editmodal/editmodal.component';
-import { DelmodalComponent } from './modal/delmodal/delmodal.component';
-import { UserService } from './service/user.service';
+import { DelmodalComponent } from './modal/delmodal/DeleteUserModal.component';
 import { Users } from './model/user';
-import { ToastService } from '../toast.service';
+import { UserService } from '../services/user.service';
+import { ToastService } from '../services/toast.service';
+import { catchError } from 'rxjs/operators';
+import { Page } from '../page/page';
+import { EditmodalComponent } from './modal/editmodal/EditUserModal.component';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +22,7 @@ export class UsersComponent implements OnInit {
   page: number;
   collectionSize: number;
   pageSize: number = 4;
-  dataLength: number;
+  userLength: number;
   users: Users[];
   
 
@@ -38,9 +40,9 @@ export class UsersComponent implements OnInit {
   }
   
   ngOnInit(){
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      const forPage = params["page"];
-      const search = params["search"];
+    this.activeRoute.queryParams.subscribe((params: ParamMap) => {
+      const forPage = params.get("page");
+      const search = params.get("search");
       this.page = forPage ? parseInt(forPage) : 1;
       this.searchText = search ? search : null;
       this.onSearch();
@@ -48,22 +50,31 @@ export class UsersComponent implements OnInit {
   }
 
   loadData(){
-    this.users = this.service.getPageUsers(this.page, this.pageSize);
-    this.collectionSize = this.service.getAllUsers().length;
-    
+    this.service.getUsers(this.page, this.pageSize).pipe(catchError(err => {
+      return err;
+    })
+    ).subscribe((reply: Page<Users>) => {
+      this.users = reply.content;
+      this.collectionSize = reply.totalElements > 0 ? reply.totalElements: 4;
+    })
   }
 
   loadFilteredUsers() {
-    const searchText = this.searchText.toLowerCase();
-    this.users = this.service.getFilteredUsers(this.page,this.pageSize,searchText);
-    this.collectionSize = this.service.getFilteredUsers(this.page,this.pageSize,searchText).length;
+    this.service.getUsers(this.page, this.pageSize).pipe(catchError(() => {
+      return null;
+    })
+    ).subscribe((reply: Page<Users>) => {
+      this.users = reply.content;
+      this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
+      this.userLength = reply.totalElements > 0 ? this.collectionSize : 0;
+    })
   }
 
   onSearch(){
     if (this.searchText) {
       this.router.navigate(["/users"], {queryParams: { page: this.page, search: this.searchText }});
       this.loadFilteredUsers();
-      this.dataLength = this.collectionSize;
+      this.userLength = this.collectionSize;
     } else {
       this.router.navigate(["/users"], { queryParams: { page: this.page } });
       this.loadData();
@@ -89,7 +100,7 @@ export class UsersComponent implements OnInit {
     
   }
 
-  delModal(user: Users){
+  deleteModal(user: Users){
     const modalRef = this.modalService.open(DelmodalComponent);
     modalRef.componentInstance.user= user;
 

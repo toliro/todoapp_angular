@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Users } from '../users/model/user';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Page } from '../models/page';
+import { Page } from '../page/page';
 
 
 @Injectable({
@@ -29,13 +29,9 @@ export class UserService {
   }
 
   
-  getUsers(
-    pageNum: number,
-    pageSize: number,
-    searchText?: string
-  ): Observable<Page<Users>> {
+  getUsers(page: number, pageSize: number,searchText?: string): Observable<Page<Users>> {
     let params = new HttpParams()
-      .set("page", (pageNum - 1).toString())
+      .set("page", (page - 1).toString())
       .set("size", pageSize.toString());
     if (searchText) {
       params = params

@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Users } from '../../model/user';
-import { UserService } from '../../service/user.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-editmodal',
-  templateUrl: './editmodal.component.html',
-  styleUrls: ['./editmodal.component.scss']
+  templateUrl: './EditUserModal.component.html',
+  styleUrls: ['./EditUserModal.component.scss']
 })
 export class EditmodalComponent implements OnInit {
 

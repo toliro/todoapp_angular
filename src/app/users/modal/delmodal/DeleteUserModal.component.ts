@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { UserService } from '../../service/user.service';
 import { Users } from '../../model/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-delmodal',
-  templateUrl: './delmodal.component.html',
-  styleUrls: ['./delmodal.component.scss']
+  templateUrl: './DeleteUserModal.component.html',
+  styleUrls: ['./DeleteUserModal.component.scss']
 })
 export class DelmodalComponent implements OnInit {
 

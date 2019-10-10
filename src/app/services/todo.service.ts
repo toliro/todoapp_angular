@@ -3,8 +3,8 @@ import { environment } from 'src/environments/environment';
 import { Users } from '../users/model/user';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Page } from '../models/page';
-import { Todos } from '../todos/model/todosinterface';
+import { Todos } from '../todos/model/todos';
+import { Page } from '../page/page';
 
 
 @Injectable({
@@ -50,7 +50,7 @@ export class TodoService {
   }
 
   
-  getAllUsers(): Observable<Users[]> {
-    return this.http.get<Users[]>(this.baseUrl);
+  getAllTodos(): Observable<Todos[]> {
+    return this.http.get<Todos[]>(this.baseUrl);
   }
 }

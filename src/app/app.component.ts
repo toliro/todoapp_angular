@@ -1,7 +1,7 @@
 import { Component, NgModuleRef} from '@angular/core';
-import { ToastService } from './toast.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from './todos/modal/modal.component';
+import { ModalComponent } from './todos/modal/AddTodoModal.component';
+import { ToastService } from './services/toast.service';
 
 @Component({
   selector: 'app-root',
