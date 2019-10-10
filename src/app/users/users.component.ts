@@ -41,9 +41,9 @@ export class UsersComponent implements OnInit {
   
   ngOnInit(){
     this.activeRoute.queryParams.subscribe((params: ParamMap) => {
-      const forPage = params.get("page");
-      const search = params.get("search");
-      this.page = forPage ? parseInt(forPage) : 1;
+      const page = params['page'];
+      const search = params['search'];
+      this.page = page ? parseInt(page) : 1;
       this.searchText = search ? search : null;
       this.onSearch();
     });
