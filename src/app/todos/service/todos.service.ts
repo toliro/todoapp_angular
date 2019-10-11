@@ -95,7 +95,7 @@ export class TodosService {
   constructor() {
   }
 
-  getAllTodos() {
+  getTodos() {
     return this.todoData;
   }
 
@@ -137,7 +137,7 @@ export class TodosService {
     return findTodo;
   }
 
-  getFilteredTodos(page: number, pageSize: number, searchText: string): Todos[] {
+  getAllTodos(page: number, pageSize: number, searchText: string): Todos[] {
     const filtered = this.todoData.filter(todo => {
       return (
         todo.name.toLowerCase().includes(searchText) ||

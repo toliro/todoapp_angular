@@ -82,7 +82,7 @@ export class UserService {
   ]
 
   //get all users
-  getAllUsers(): Users[]{
+  getUsers(): Users[]{
     return this.user;
   }
 
@@ -125,7 +125,7 @@ export class UserService {
     return findUser[0];
   }
 
-  getFilteredUsers(page: number,pageSize: number,searchText: string): Users[] {
+  getAllUsers(page: number,pageSize: number,searchText: string): Users[] {
     const filteredUsers = this.user.filter(user => {
       return (
         user.firstname.toLowerCase().includes(searchText) ||

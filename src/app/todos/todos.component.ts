@@ -46,13 +46,13 @@ export class TodosComponent implements OnInit {
 
   loadFilteredTodos() {
     const searchText = this.searchText.toLowerCase();
-    this.todos = this.service.getFilteredTodos(this.page,this.pageSize,searchText);
-    this.collectionSize = this.service.getFilteredTodos(this.page,this.pageSize,searchText).length;
+    this.todos = this.service.getAllTodos(this.page,this.pageSize,searchText);
+    this.collectionSize = this.service.getAllTodos(this.page,this.pageSize,searchText).length;
   }
 
   loadData(){
     this.todos = this.service.getPageTodos(this.page, this.pageSize);
-    this.collectionSize = this.service.getAllTodos().length;
+    this.collectionSize = this.service.getTodos().length;
   }
 
   onSearch(){

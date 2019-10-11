@@ -49,14 +49,14 @@ export class UsersComponent implements OnInit {
 
   loadData(){
     this.users = this.service.getPageUsers(this.page, this.pageSize);
-    this.collectionSize = this.service.getAllUsers().length;
+    this.collectionSize = this.service.getUsers().length;
     
   }
 
   loadFilteredUsers() {
     const searchText = this.searchText.toLowerCase();
-    this.users = this.service.getFilteredUsers(this.page,this.pageSize,searchText);
-    this.collectionSize = this.service.getFilteredUsers(this.page,this.pageSize,searchText).length;
+    this.users = this.service.getAllUsers(this.page,this.pageSize,searchText);
+    this.collectionSize = this.service.getAllUsers(this.page,this.pageSize,searchText).length;
   }
 
   onSearch(){
