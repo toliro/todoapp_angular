@@ -35,11 +35,11 @@ export class TodosComponent implements OnInit {
     // this.router = router;
   }
   ngOnInit(){
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      const forPage = params["page"];
-      const search = params["search"];
-      this.page = forPage ? parseInt(forPage) : 1;
-      this.searchText = search ? search : null;
+    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
+      const forPage = params.get("page");
+      const search = params.get("search");
+      this.page = params.has(forPage) ? parseInt(forPage) : 1;
+      this.searchText = params.has(search) ? search : null;
       this.onSearch();
     });
   }
