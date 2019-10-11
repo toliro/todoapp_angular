@@ -37,13 +37,12 @@ export class UserService {
       params = params
         .set("firstname", searchText)
         .set("lastname", searchText)
-        .set("occupation", searchText)
-        .set("status", searchText);
+        .set("occupation", searchText);
     }
     return this.http.get<Page<Users>>(this.baseUrl, { params });
   }
 
-  
+  //get user = /user/id
   getUser(id: string): Observable<Users> {
     return this.http.get<Users>(`${this.baseUrl}/${id}`);
   }

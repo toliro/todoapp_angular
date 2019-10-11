@@ -41,11 +41,13 @@ export class UsersComponent implements OnInit {
   }
   
   ngOnInit(){
-    this.activeRoute.queryParams.subscribe((params: ParamMap) => {
-      const page = params['page'];
-      const search = params['search'];
-      this.page = page ? parseInt(page) : 1;
-      this.searchText = search ? search : null;
+    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
+      const forPage = params.get("page");
+      const search = params.get("search")
+      console.log(search);
+      this.page = params.has(forPage) ? parseInt(forPage) : 1;
+      this.searchText = params.has(search) ? search : null;
+      this.collectionSize = this.page * this.pageSize;
       this.onSearch();
     });
   }
@@ -56,7 +58,7 @@ export class UsersComponent implements OnInit {
     })
     ).subscribe((reply: Page<Users>) => {
       this.users = reply.content;
-      this.collectionSize = reply.totalElements > 0 ? reply.totalElements: 4;
+      this.collectionSize = reply.totalElements? reply.totalElements: 4;
     })
   }
 

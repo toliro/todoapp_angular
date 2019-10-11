@@ -61,10 +61,6 @@ export class ModalComponent implements OnInit {
     }
   }
 
-  continue(){
-    this.router.navigate(['/todos']);
-  }
-
  
 }
 

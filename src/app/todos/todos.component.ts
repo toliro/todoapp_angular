@@ -34,35 +34,37 @@ export class TodosComponent implements OnInit {
     private toast: ToastService) {
   }
   ngOnInit() {
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      const forPage = params["page"];
-      const search = params["search"];
-      this.page = forPage ? parseInt(forPage) : 1;
-      this.searchText = search ? search : null;
+    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
+      const forPage = params.get("page");
+      const search = params.get("search")
+      this.page = params.has(forPage) ? parseInt(forPage) : 1;
+      this.searchText = params.has(search) ? search : null;
       this.collectionSize = this.page * this.pageSize;
       this.onSearch();
     });
   }
 
   loadPageTodos() {
-    this.service.getTodos(this.page, this.pageSize).pipe(catchError(() => {
+    this.service.getTodos(this.page, this.pageSize, this.searchText).pipe(catchError(() => {
       return null;
     })
     ).subscribe((reply: Page<Todos>) => {
       console.log(reply);
       this.todos = reply.content;
-      this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
-      this.todoLength = reply.totalElements > 0 ? this.collectionSize : 0;
+      this.collectionSize = reply.totalElements;
     })
   }
 
   loadData() {
-    this.service.getTodos(this.page, this.pageSize, this.searchText).pipe(catchError(err => {
+    this.service.getTodos(this.page, this.pageSize).pipe(catchError(err => {
       return err;
     })
     ).subscribe((reply: Page<Todos>) => {
       this.todos = reply.content;
-      this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
+      console.log(this.todos);
+      console.log(reply.totalElements);
+      this.collectionSize = reply.totalElements;
+      console.log(this.collectionSize);
 
     })
   }
