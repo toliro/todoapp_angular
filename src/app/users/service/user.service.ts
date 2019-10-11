@@ -81,18 +81,21 @@ export class UserService {
     }
   ]
 
+  //get all users
   getAllUsers(): Users[]{
     return this.user;
   }
 
   getPageUsers(page: number, pageSize: number): Users[] {
+    console.log(this.user.slice((page - 1) * pageSize, page * pageSize));
     return this.user.slice((page - 1) * pageSize, page * pageSize);
+   
   }
 
 
   addUser(user: Users): Users {
     //increment id with the id of the last element
-    var userId: string = (
+    let userId: string = (
       parseInt(this.user[this.user.length - 1].id) + 1
     ).toString();
     user.id = userId;
@@ -130,6 +133,7 @@ export class UserService {
         user.occupation.toLowerCase().includes(searchText)
       );
     });
+    console.log(filteredUsers.slice((page - 1) * pageSize, page * pageSize));
     return filteredUsers.slice((page - 1) * pageSize, page * pageSize);
   }
 
