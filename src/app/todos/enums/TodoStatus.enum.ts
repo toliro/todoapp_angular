@@ -1,4 +1,4 @@
-export enum Enumstatus {
+export enum Todostatus {
     open= 'Open',
     close= 'Close',
     pending= 'Pending',

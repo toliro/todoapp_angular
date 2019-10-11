@@ -1,28 +1,25 @@
 import { Injectable } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Todos } from '../model/todosinterface';
-import { Users } from 'src/app/users/model/user';
-import { Enumstatus } from '../enums/enumstatus.enum';
-
+import { Todos } from '../model/todos';
+import { Todostatus } from '../enums/TodoStatus.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TodosServiceService {
+export class TodosService {
 
   todoData = [
     {
       id: "1",
       name: "Testing",
       description: "Unit Testing",
-      status: Enumstatus.open,
+      status: Todostatus.open,
       owner: "1"
     },
     {
       id: "2",
       name: "Devolepment",
       description: "Web Development",
-      status: Enumstatus.open,
+      status: Todostatus.open,
       owner: "1"
 
     },
@@ -30,7 +27,7 @@ export class TodosServiceService {
       id: "3",
       name: "Testing",
       description: "Production Testing",
-      status: Enumstatus.open,
+      status: Todostatus.open,
       owner: "2"
 
     },
@@ -38,7 +35,7 @@ export class TodosServiceService {
       id: "4",
       name: "Developement",
       description: "Web Development",
-      status: Enumstatus.pending,
+      status: Todostatus.pending,
       owner: "3"
 
     },
@@ -46,7 +43,7 @@ export class TodosServiceService {
       id: "5",
       name: "Developement",
       description: "Web Development",
-      status: Enumstatus.pending,
+      status: Todostatus.pending,
       owner: "3"
 
     },
@@ -54,7 +51,7 @@ export class TodosServiceService {
       id: "6",
       name: "Developement",
       description: "Web Development",
-      status: Enumstatus.pending,
+      status: Todostatus.pending,
       owner: "3"
 
     },
@@ -63,7 +60,7 @@ export class TodosServiceService {
       id: "7",
       name: "Developement",
       description: "Web Development",
-      status: Enumstatus.pending,
+      status: Todostatus.pending,
       owner: "3"
 
     },
@@ -72,7 +69,7 @@ export class TodosServiceService {
       id: "8",
       name: "Testing",
       description: "Unit Testing",
-      status: Enumstatus.open,
+      status: Todostatus.open,
       owner: "5"
     },
 
@@ -80,7 +77,7 @@ export class TodosServiceService {
       id: "9",
       name: "Testing",
       description: "Unit Testing",
-      status: Enumstatus.open,
+      status: Todostatus.open,
       owner: "6"
     },
 
@@ -88,7 +85,7 @@ export class TodosServiceService {
       id: "10",
       name: "Testing",
       description: "Unit Testing",
-      status: Enumstatus.open,
+      status: Todostatus.open,
       owner: "7"
     },
     

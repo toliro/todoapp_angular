@@ -1,9 +1,9 @@
-import { Enumstatus } from '../enums/enumstatus.enum';
+import { Todostatus } from '../enums/TodoStatus.enum';
 
 export interface Todos {
     id: string;
     name: string;
     description: string;
-    status: Enumstatus;
+    status: Todostatus;
     owner: string;
 }

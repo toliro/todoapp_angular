@@ -1,16 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TodosServiceService } from '../../service/todos-service.service';
-import { Todos } from '../../model/todosinterface';
+import { Todos } from '../../model/todos';
+import { TodosService } from '../../service/todos.service';
 
 @Component({
   selector: 'app-delmodal',
-  templateUrl: './delmodal.component.html',
-  styleUrls: ['./delmodal.component.scss']
+  templateUrl: './DeleteTodoModal.component.html',
+  styleUrls: ['./DeleteTodoModal.component.scss']
 })
 export class DelmodalComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal, private todoService: TodosServiceService) { }
+  constructor(private activeModal: NgbActiveModal, private todoService: TodosService) { }
 
   @Input()
   todo: Todos;

@@ -5,8 +5,8 @@ import { Users } from '../../model/user';
 
 @Component({
   selector: 'app-delmodal',
-  templateUrl: './delmodal.component.html',
-  styleUrls: ['./delmodal.component.scss']
+  templateUrl: './DeleteUserModal.component.html',
+  styleUrls: ['./DeleteUserModal.component.scss']
 })
 export class DelmodalComponent implements OnInit {
 

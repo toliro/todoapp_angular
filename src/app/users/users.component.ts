@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditmodalComponent } from './modal/editmodal/editmodal.component';
-import { DelmodalComponent } from './modal/delmodal/delmodal.component';
+import { EditmodalComponent } from './modal/editmodal/EditUserModal.component';
+import { DelmodalComponent } from './modal/delmodal/DeleteUserModal.component';
 import { UserService } from './service/user.service';
 import { Users } from './model/user';
 import { ToastService } from '../toast.service';
@@ -38,9 +38,9 @@ export class UsersComponent implements OnInit {
   }
   
   ngOnInit(){
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      const forPage = params["page"];
-      const search = params["search"];
+    this.activeRoute.queryParams.subscribe((params: ParamMap) => {
+      const forPage = params['page']
+      const search = params['search']
       this.page = forPage ? parseInt(forPage) : 1;
       this.searchText = search ? search : null;
       this.onSearch();
@@ -77,10 +77,10 @@ export class UsersComponent implements OnInit {
     modalRef.result.then(result => {
       if(result === 'added'){
         this.onSearch();
-        this.toast.showSuccess("Added")
+        this.toast.showSuccess("User Added Successfully")
       }else if(result === 'updated'){
         this.onSearch();
-        this.toast.showSuccess('Updated')
+        this.toast.showSuccess('User Updated Successfully')
       }
          
        
@@ -95,11 +95,8 @@ export class UsersComponent implements OnInit {
 
     modalRef.result.then(result => {
       if(result === 'deleted'){
-        this.toast.showSuccess("Deleted")
+        this.toast.showSuccess("User Deleted Successfully")
         this.onSearch();
-      }else{
-        this.onSearch();
-        this.toast.showSuccess('failed to delete')
       }
     })
 

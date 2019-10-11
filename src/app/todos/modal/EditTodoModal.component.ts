@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TodosServiceService } from '../service/todos-service.service';
-import { Todos } from '../model/todosinterface';
-import { Enumstatus } from '../enums/enumstatus.enum';
+import { Todostatus } from '../enums/TodoStatus.enum';
+import { Todos } from '../model/todos';
+import { TodosService } from '../service/todos.service';
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  templateUrl: './EditTodoModal.component.html',
+  styleUrls: ['./EditTodoModal.component.scss']
 })
 export class ModalComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal, private todoservice: TodosServiceService) { }
+  constructor(private activeModal: NgbActiveModal, private todoservice: TodosService) { }
 
   @Input()
   todo: Todos;
@@ -19,7 +19,7 @@ export class ModalComponent implements OnInit {
   // usersData: User[];
   name: string;
   description: string;
-  status: Enumstatus;
+  status: Todostatus;
   owner: string;
 
   modalTitle: string;
@@ -29,7 +29,7 @@ export class ModalComponent implements OnInit {
     this.modalTitle = this.todo ? 'Edit Todo' : 'Add Todo';
     this.name = this.todo ? this.todo.name : "";
     this.description = this.todo ? this.todo.description : "";
-    this.status = this.todo ? this.todo.status : Enumstatus.open;
+    this.status = this.todo ? this.todo.status : Todostatus.open;
     this.owner = this.todo ? this.todo.owner: "";
     console.log(this.todo)
   }

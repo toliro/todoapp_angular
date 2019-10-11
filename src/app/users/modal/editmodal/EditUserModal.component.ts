@@ -5,8 +5,8 @@ import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-editmodal',
-  templateUrl: './editmodal.component.html',
-  styleUrls: ['./editmodal.component.scss']
+  templateUrl: './EditUserModal.component.html',
+  styleUrls: ['./EditUserModal.component.scss']
 })
 export class EditmodalComponent implements OnInit {
 

@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
-import { TodosServiceService } from './service/todos-service.service';
-import { Todos } from './model/todosinterface';
-import { ModalComponent } from './modal/modal.component';
+import { Todos } from './model/todos';
+import { ModalComponent } from './modal/EditTodoModal.component';
 import { ToastService } from '../toast.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DelmodalComponent } from './modal/delmodal/delmodal.component';
+import { DelmodalComponent } from './modal/delmodal/DeleteTodoModal.component';
+import { TodosService } from './service/todos.service';
 
 @Component({
   selector: 'app-todos',
@@ -28,7 +28,7 @@ export class TodosComponent implements OnInit {
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private service: TodosServiceService,
+    private service: TodosService,
     private modalService: NgbModal,
     private toast: ToastService   ){
     this.loadData();
@@ -76,9 +76,8 @@ export class TodosComponent implements OnInit {
     modalRef.result.then(result => {
       if(result === 'deleted'){
         this.onSearch();
-        this.toast.showSuccess('Deleted');
-      }
-         
+        this.toast.showSuccess('Deleted Todo');
+      } 
        
     })
     
@@ -91,10 +90,10 @@ export class TodosComponent implements OnInit {
     modalRef.result.then(result => {
       if(result === 'added'){
         this.onSearch();
-        this.toast.showSuccess("Added")
+        this.toast.showSuccess("Todo Added Successfully")
       }else if(result === 'updated'){
         this.onSearch();
-        this.toast.showSuccess('Updated')
+        this.toast.showSuccess('Todo Updated Successfully')
       }
          
        

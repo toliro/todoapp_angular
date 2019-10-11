@@ -4,10 +4,9 @@ import { TodosComponent } from './todos.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TodosRoutingModule } from './todos-routing.module';
-import { ModalComponent } from './modal/modal.component';
+import { ModalComponent } from './modal/EditTodoModal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DelmodalComponent } from './modal/delmodal/delmodal.component';
-import { TodosServiceService } from './service/todos-service.service';
+import { DelmodalComponent } from './modal/delmodal/DeleteTodoModal.component';
 
 @NgModule({
   declarations: [TodosComponent, ModalComponent, DelmodalComponent],

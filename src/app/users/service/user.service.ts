@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Users } from '../model/user';
-import { TodosServiceService } from 'src/app/todos/service/todos-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private todoService: TodosServiceService) { }
+  constructor() { }
 
   private user: Users[] = [
     {
