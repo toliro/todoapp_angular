@@ -41,13 +41,8 @@ export class EditmodalComponent implements OnInit {
         occupation: this.occupation,
         profile: this.profile,
       };
-      const result = this.userservice.updateUser(editUser);
-      if(result){
-        this.activeModal.close('updated');
-      }
-      else{
-        this.activeModal.close('fail');
-      }
+     this.activeModal.close(editUser);
+    
     } else {
       //adding user
       let adUser: Users = {
@@ -57,12 +52,8 @@ export class EditmodalComponent implements OnInit {
         occupation: this.occupation,
         profile: this.profile,
       };
-      const result = this.userservice.addUser(adUser);
-      if(result){
-        this.activeModal.close('added')
-      }else{
-        this.activeModal.close("fail");
-      }
+      this.activeModal.close(adUser);
+
     }
   }
 

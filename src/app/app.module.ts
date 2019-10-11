@@ -4,7 +4,6 @@ import { FormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
-import { from } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';

@@ -8,6 +8,7 @@ import { ToastService } from '../services/toast.service';
 import { catchError } from 'rxjs/operators';
 import { Page } from '../page/page';
 import { EditmodalComponent } from './modal/editmodal/EditUserModal.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -59,9 +60,9 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  loadFilteredUsers() {
-    this.service.getUsers(this.page, this.pageSize).pipe(catchError(() => {
-      return null;
+  loadPageUsers() {
+    this.service.getUsers(this.page, this.pageSize, this.searchText).pipe(catchError((err) => {
+      return err;
     })
     ).subscribe((reply: Page<Users>) => {
       this.users = reply.content;
@@ -73,7 +74,7 @@ export class UsersComponent implements OnInit {
   onSearch(){
     if (this.searchText) {
       this.router.navigate(["/users"], {queryParams: { page: this.page, search: this.searchText }});
-      this.loadFilteredUsers();
+      this.loadPageUsers();
       this.userLength = this.collectionSize;
     } else {
       this.router.navigate(["/users"], { queryParams: { page: this.page } });
@@ -86,15 +87,28 @@ export class UsersComponent implements OnInit {
     modalRef.componentInstance.user = user;
 
     modalRef.result.then(result => {
-      if(result === 'added'){
-        this.onSearch();
-        this.toast.showSuccess("Added")
-      }else if(result === 'updated'){
-        this.onSearch();
-        this.toast.showSuccess('Updated')
+      console.log(result);
+      if(user){
+        this.service.updateUser(result).pipe(catchError(err => {
+          return err;
+        })
+        ).subscribe((reply: Users) =>{
+          if(reply){
+            this.onSearch();
+            this.toast.showSuccess("User Updated");
+          }
+        })
+      }else{
+        this.service.addUser(result).pipe(catchError(err => {
+          return err;
+        })
+        ).subscribe((reply: Users) =>{
+          if(reply){
+            this.onSearch();
+            this.toast.showSuccess("User Added");
+          }
+        })
       }
-         
-       
     })
 
     
@@ -105,12 +119,10 @@ export class UsersComponent implements OnInit {
     modalRef.componentInstance.user= user;
 
     modalRef.result.then(result => {
+      console.log(result);
       if(result === 'deleted'){
-        this.toast.showSuccess("Deleted")
+        this.toast.showSuccess("User Deleted")
         this.onSearch();
-      }else{
-        this.onSearch();
-        this.toast.showSuccess('failed to delete')
       }
     })
 

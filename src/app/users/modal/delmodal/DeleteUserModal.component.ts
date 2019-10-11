@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class DelmodalComponent implements OnInit {
 
-  constructor(private activeModal : NgbActiveModal, private service: UserService) { }
+  constructor(private activeModal: NgbActiveModal, private service: UserService) { }
 
   @Input()
   user: Users;
@@ -19,10 +19,7 @@ export class DelmodalComponent implements OnInit {
   }
 
   delete() {
-    const result = this.service.deleteUser(this.user.id);
-    if (result) {
-      this.activeModal.close('deleted');
-    }
+    this.activeModal.close(this.user.id);
   }
 
 }

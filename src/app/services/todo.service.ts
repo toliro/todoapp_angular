@@ -16,6 +16,7 @@ export class TodoService {
 
   constructor(private http: HttpClient) { }
 
+  //add todos
   addTodos(todo: Todos): Observable<Todos> {
     return this.http.post<Todos>(this.baseUrl, todo);
   }

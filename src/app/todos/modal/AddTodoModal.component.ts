@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Todos } from '../model/todos';
-
 import { TodoService } from 'src/app/services/todo.service';
 import { Todostatus } from '../enums/todostatus.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -12,7 +12,7 @@ import { Todostatus } from '../enums/todostatus.enum';
 })
 export class ModalComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal, private todoservice: TodoService) { }
+  constructor(private activeModal: NgbActiveModal, private todoservice: TodoService, private router: Router) { }
 
   @Input()
   todo: Todos;
@@ -32,7 +32,7 @@ export class ModalComponent implements OnInit {
     this.description = this.todo ? this.todo.description : "";
     this.status = this.todo ? this.todo.status : Todostatus.open;
     this.owner = this.todo ? this.todo.owner: "";
-    console.log(this.todo)
+    
   }
 
   submit() {
@@ -45,13 +45,8 @@ export class ModalComponent implements OnInit {
         status: this.status,
         owner: this.owner
       };
-      const result = this.todoservice.updateTodos(editTodo);
-      if(result){
-        this.activeModal.close('updated');
-      }
-      else{
-        this.activeModal.close('failed');
-      }
+      this.activeModal.close(editTodo);
+        
     } else {
       //For adding Todo
       let addTodo: Todos = {
@@ -61,13 +56,13 @@ export class ModalComponent implements OnInit {
         status: this.status,
         owner: this.owner
       };
-      const result = this.todoservice.addTodos(addTodo);
-      if(result){
-        this.activeModal.close('added')
-      }else{
-        this.activeModal.close("failed");
-      }
+
+      this.activeModal.close(addTodo);
     }
+  }
+
+  continue(){
+    this.router.navigate(['/todos']);
   }
 
  

@@ -18,7 +18,7 @@ export class TodosComponent implements OnInit {
 
   title = 'my-app';
 
-  searchText: string;
+  searchText?: string;
   page: number;
   collectionSize: number;
   pageSize: number = 4;
@@ -32,8 +32,6 @@ export class TodosComponent implements OnInit {
     private service: TodoService,
     private modalService: NgbModal,
     private toast: ToastService) {
-    this.loadData();
-    // this.router = router;
   }
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((params: Params) => {
@@ -41,15 +39,17 @@ export class TodosComponent implements OnInit {
       const search = params["search"];
       this.page = forPage ? parseInt(forPage) : 1;
       this.searchText = search ? search : null;
+      this.collectionSize = this.page * this.pageSize;
       this.onSearch();
     });
   }
 
-  loadFilteredTodos() {
+  loadPageTodos() {
     this.service.getTodos(this.page, this.pageSize).pipe(catchError(() => {
       return null;
     })
     ).subscribe((reply: Page<Todos>) => {
+      console.log(reply);
       this.todos = reply.content;
       this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
       this.todoLength = reply.totalElements > 0 ? this.collectionSize : 0;
@@ -57,20 +57,20 @@ export class TodosComponent implements OnInit {
   }
 
   loadData() {
-    this.service.getTodos(this.page, this.pageSize).pipe(catchError(err => {
+    this.service.getTodos(this.page, this.pageSize, this.searchText).pipe(catchError(err => {
       return err;
     })
     ).subscribe((reply: Page<Todos>) => {
       this.todos = reply.content;
       this.collectionSize = reply.totalElements > 0 ? reply.totalElements : 4;
+
     })
   }
 
   onSearch() {
-    console.log(this.searchText);
     if (this.searchText) {
       this.router.navigate(["/todos"], { queryParams: { page: this.page, search: this.searchText } });
-      this.loadFilteredTodos();
+      this.loadPageTodos();
       this.todoLength = this.collectionSize;
     } else {
       this.router.navigate(["/todos"], { queryParams: { page: this.page } });
@@ -85,6 +85,7 @@ export class TodosComponent implements OnInit {
     modalRef.componentInstance.todo = todo;
 
     modalRef.result.then(result => {
+      console.log(result);
       this.service.deleteTodos(result).pipe(catchError(err => {
         return err;
       })
@@ -103,6 +104,7 @@ export class TodosComponent implements OnInit {
     modalRef.componentInstance.todo = todo;
 
     modalRef.result.then(result => {
+      console.log(result);
       if (todo) {
         this.service.updateTodos(result).pipe(catchError(err => {
           return err;
@@ -128,11 +130,8 @@ export class TodosComponent implements OnInit {
         this.onSearch();
         this.toast.showSuccess("Added")
       }
-
-
     })
   }
-
 
 
 }

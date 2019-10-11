@@ -21,7 +21,8 @@ export class DelmodalComponent implements OnInit {
   delete() {
     const result = this.todoService.deleteTodos(this.todo.id);
     if (result) {
-      this.activeModal.close("deleted");
+
+      this.activeModal.close(result);
     }
   }
 
